@@ -44,7 +44,7 @@ module.exports = {
           compact: true
         }
       }
-    ]
+    ],
   },
   node: {
     fs: 'empty',

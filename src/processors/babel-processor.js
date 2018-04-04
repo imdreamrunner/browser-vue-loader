@@ -27,8 +27,6 @@ const babelProcessor = (url, source, registerFunction) => {
     const System = {
       register: registerFunction
     }
-    console.log('this', this)
-    console.log('System.register', System.register)
     eval(transformedCode)
   }
 

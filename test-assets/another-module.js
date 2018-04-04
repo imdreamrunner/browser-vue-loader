@@ -1,3 +1,2 @@
-export function another() {
-  return 2
-}
+const a = 'abc'
+export default a
