@@ -14,11 +14,13 @@
     "url": "https://cvgellhorn@github.com/cvgellhorn/webpack-boilerplate.git"
   },
   "dependencies": {
-    "lodash": "4.17.5"
+    "es-module-loader": "^2.2.8",
+    "lodash": "^4.17.5"
   },
   "devDependencies": {
     "babel-core": "6.26.0",
     "babel-loader": "7.1.4",
+    "babel-polyfill": "^6.26.0",
     "babel-preset-env": "1.6.1",
     "clean-webpack-plugin": "0.1.19",
     "cross-env": "5.1.4",
