@@ -1,45 +1,47 @@
-import RegisterLoader from 'es-module-loader/core/register-loader.js'
-import { ModuleNamespace } from 'es-module-loader/core/loader-polyfill.js'
+import RegisterLoader from 'es-module-loader/core/register-loader'
+import { ModuleNamespace } from 'es-module-loader/core/loader-polyfill'
+import fetchSource from './fetch-source'
+import resolveKey from './resolve-key'
+import Router from './router'
+import * as componentNormalizer from '../runtime/component-normalizer'
 
-import resourceFetcher from './resource-fetcher'
-import babelProcessor from '../processors/babel-processor'
-
-export default class BrowserVueLoader extends RegisterLoader {
-  /*
-   * Constructor
-   * Purely for completeness in this example
-   */
+class BrowserVueLoader extends RegisterLoader {
   constructor (baseKey) {
     super(baseKey)
+    this.router = new Router(this)
   }
 
   /*
-   * Default resolve hook
+   * Resolve hook
    *
-   * The default parent resolution matches the HTML spec module resolution
-   * So super[RegisterLoader.resolve](key, parentKey) will return:
+   * super[RegisterLoader.resolve](key, parentKey) will return:
    *  - undefined if "key" is a plain names (eg 'lodash')
    *  - URL resolution if "key" is a relative URL (eg './x' will resolve to parentKey as a URL, or the baseURI)
    *
-   * So relativeResolved becomes either a fully normalized URL or a plain name (|| key) in this example
    */
   [RegisterLoader.resolve] (key, parentKey) {
-    const relativeResolved = super[RegisterLoader.resolve](key, parentKey) || key
-    return relativeResolved
+    let relativeResolved = super[RegisterLoader.resolve](key, parentKey) || key
+    return resolveKey(relativeResolved)
   }
 
   /*
-   * Default instantiate hook
-   *
-   * This is one form of instantiate which is to return a ModuleNamespace directly
-   * This will result in every module supporting:
-   *
-   *   import { moduleName } from 'my-module-name';
-   *   assert(moduleName === 'my-module-name');
+   * Instantiate hook
    */
   async [RegisterLoader.instantiate] (key, processAnonRegister) {
-    const source = await resourceFetcher.fetch(key)
-    await babelProcessor(key, source, (...args) => this.register(...args))
-    processAnonRegister()
+    const source = await fetchSource(key)
+    await this.router.route(key, source)
+    // console.log('processAnonRegister', processAnonRegister)
   }
 }
+
+
+const loader = new BrowserVueLoader()
+
+const componentNormalizerModule = new ModuleNamespace(componentNormalizer)
+loader.registry.set('component-normalizer', componentNormalizerModule)
+console.log('new ModuleNamespace(componentNormalizer)', componentNormalizerModule)
+window.componentNormalizerModule = componentNormalizerModule
+
+const loadVue = (entryUrl) => loader.import(entryUrl)
+
+export default loadVue
