@@ -5,15 +5,8 @@
 </template>
 
 <script>
-  console.log('App is loaded!')
+  console.log('App is loaded')
   export default {
-
-    template: 'aaa',
-
-    render() {
-      return 'aa'
-    },
-
     data () {
       return {
         msg: 'World'

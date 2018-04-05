@@ -1,12 +1,12 @@
 {
   "plugins": [
-    "transform-class-properties",
-    "transform-remove-strict-mode"
+    "transform-class-properties"
   ],
   "presets": [
     [
       "env",
       {
+        "module": false
       }
     ]
   ]

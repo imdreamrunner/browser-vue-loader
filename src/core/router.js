@@ -1,4 +1,5 @@
 import es6 from '../processors/es6'
+import css from '../processors/css'
 import vueSfc from '../processors/vue-sfc'
 import vueTemplate from '../processors/vue-template'
 
@@ -17,6 +18,11 @@ const routingTable = [
     name: 'vue-template',
     matcher: /.*\.vue/,
     processor: vueTemplate,
+  },
+  {
+    name: 'css',
+    matcher: /.*\.css/,
+    processor: css,
   },
 ]
 
