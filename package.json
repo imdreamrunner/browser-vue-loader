@@ -16,6 +16,7 @@
   "dependencies": {
     "babel-plugin-syntax-dynamic-import": "latest",
     "babel-plugin-transform-es2015-modules-systemjs": "latest",
+    "babel-plugin-transform-remove-strict-mode": "0.0.2",
     "babel-standalone": "^6.26.0",
     "es-module-loader": "^2.2.8",
     "lodash": "^4.17.5",

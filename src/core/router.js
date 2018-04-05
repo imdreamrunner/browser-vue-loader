@@ -1,22 +1,32 @@
 import es6 from '../processors/es6'
-import vue from '../processors/vue'
+import vueSfc from '../processors/vue-sfc'
+import vueTemplate from '../processors/vue-template'
 
 const routingTable = [
   {
+    name: 'es6',
     matcher: /.*\.js/,
     processor: es6,
   },
   {
+    name: 'vue-sfc',
     matcher: /.*\.vue/,
-    processor: vue,
-  }
+    processor: vueSfc,
+  },
+  {
+    name: 'vue-template',
+    matcher: /.*\.vue/,
+    processor: vueTemplate,
+  },
 ]
 
 export default class Router {
   constructor (loader) {
     this.loader = loader
+    this.processorMap = {}
     this.table = routingTable.map(rule => {
       rule.processor = new rule.processor(loader)
+      this.processorMap[rule.name] = rule.processor
       return rule
     })
   }
@@ -24,9 +34,17 @@ export default class Router {
   async route(key, data) {
     for (let rule of this.table) {
       if (rule.matcher.test(key)) {
-        return await rule.processor.process(key, data)
+        return rule.processor.process(key, data)
       }
     }
     throw new Error(`No processor to handle "${key}".`)
+  }
+
+  async routeTo(name, key, data) {
+    if (Object.keys(this.processorMap).indexOf(name) < 0) {
+      throw new Error(`No processor named "${name}".`)
+    }
+    const processor = this.processorMap[name]
+    return processor.process(key, data)
   }
 }

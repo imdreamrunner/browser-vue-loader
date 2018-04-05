@@ -7,8 +7,6 @@ import styles from '__vue_styles__'
 import scopeId from '__vue_scopeId__'
 import moduleIdentifier from '__vue_module_identifier__'
 
-console.log('! render', render)
-
 const Component = componentNormalizer(
   script,
   render,

@@ -11,10 +11,15 @@ export function transpile(key, source) {
     moduleIds: false,
     sourceMaps: 'inline',
     babelrc: false,
-    plugins: [babelPluginSyntaxDynamicImport, babelPluginTransformES2015ModulesSystemJS]
+    // presets: ['es2015'],
+    parserOpts: { strictMode: false },
+    plugins: [babelPluginSyntaxDynamicImport, babelPluginTransformES2015ModulesSystemJS],
   })
 
-  const transformedCode = output.code + '\n//# sourceURL=' + key + '!transpiled'
+  // delete the "use strict";
+  const outputCode = output.code.replace('"use strict";', '').replace("'use strict';", '')
+
+  const transformedCode = outputCode + '\n//# sourceURL=' + key + '!transpiled'
 
   return transformedCode
 }

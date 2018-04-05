@@ -1,9 +1,10 @@
 import { transpile } from './babel-helper'
-import BaseProcessor from '../BaseProcessor'
+import BaseProcessor from '../base-processor'
 
 export default class BabelProcessor extends BaseProcessor {
   process(key, source) {
     const transformedCode = transpile(key, source)
+
     const register = this.getRegister(key)
 
     function evalFunction() {

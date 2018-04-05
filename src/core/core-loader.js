@@ -39,9 +39,8 @@ const loader = new BrowserVueLoader()
 
 const componentNormalizerModule = new ModuleNamespace(componentNormalizer)
 loader.registry.set('component-normalizer', componentNormalizerModule)
-console.log('new ModuleNamespace(componentNormalizer)', componentNormalizerModule)
 window.componentNormalizerModule = componentNormalizerModule
 
-const loadVue = (entryUrl) => loader.import(entryUrl)
+const loadVue = (entryUrl) => loader.import(entryUrl).then(m => m.default ? m.default : m)
 
 export default loadVue
