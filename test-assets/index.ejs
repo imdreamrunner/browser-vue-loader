@@ -7,15 +7,24 @@
   <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
 </head>
 <body>
+<!--
 <div class="helper">Please open debugger.</div>
+-->
 <div id="app"></div>
 <script>
   window.onload = function () {
-    loadVue('./test-assets/sample-es-module.js').then(function (m) {
-      console.log('sampleEsModule', m)
-      window.sampleEsModule = m
-    });
-    loadVue('./test-assets/single-file-app.vue').then(App => {
+    // loadVue('./test-assets/sample-es-module.js').then(function (m) {
+    //   console.log('sampleEsModule', m)
+    //   window.sampleEsModule = m
+    // });
+    // loadVue('./test-assets/single-file-app.vue').then(App => {
+    //   window.App = App
+    //   console.log('App', App)
+    //   new Vue({
+    //     render: h => h(App)
+    //   }).$mount('#app')
+    // });
+    loadVue('./test-assets/todo-mvc/App.vue').then(App => {
       window.App = App
       console.log('App', App)
       new Vue({

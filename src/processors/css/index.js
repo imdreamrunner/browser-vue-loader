@@ -7,7 +7,6 @@ export default class CssProcessor extends BaseProcessor {
       const styleElement = document.createElement('style')
       styleElement.appendChild(document.createTextNode(source))
       document.head.appendChild(styleElement)
-      console.log('injected style', source)
     }
     this.loader.registry.set(key, new ModuleNamespace({default: injectStyle}))
   }
