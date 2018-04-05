@@ -36,10 +36,10 @@ export default class VueProcessor extends BaseProcessor {
 
     // <template>
     const template = compile(parts.template.content)
-    console.log('template', template)
+    console.log('template', parts.template)
     const templateKey = key + '!template'
-    this.loader.registry.set(templateKey, new ModuleNamespace({default: parts.template.content}))
-    transformedSource = transformedSource.replace('__vue_render__', templateKey)
+    this.loader.registry.set(templateKey, new ModuleNamespace({default: parts.template}))
+    transformedSource = transformedSource.replace('__vue_template__', templateKey)
 
 
     this.loader.registry.set('empty', new ModuleNamespace({}))
