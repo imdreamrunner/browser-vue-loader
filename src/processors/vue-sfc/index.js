@@ -21,19 +21,19 @@ export default class VueProcessor extends BaseProcessor {
 
     // <script>
     const script = parts.script.content
-    const scriptKey = key + '!script'
+    const scriptKey = key + '#script'
 
     await this.loader.router.routeTo('es6', scriptKey, script)
 
     transformedSource = transformedSource.replace('__vue_script__', scriptKey)
 
     // <template>
-    const templateKey = key + '!template'
+    const templateKey = key + '#template'
     await this.loader.router.routeTo('vue-template', templateKey, parts.template.content)
     transformedSource = transformedSource.replace('__vue_template__', templateKey)
 
     // <template>
-    const styleKey = key + '!style'
+    const styleKey = key + '#style'
     await this.loader.router.routeTo('css', styleKey, parts.styles[0].content)
     transformedSource = transformedSource.replace('__vue_styles__', styleKey)
 

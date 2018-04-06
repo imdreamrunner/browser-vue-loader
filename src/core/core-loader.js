@@ -26,10 +26,9 @@ class BrowserVueLoader extends RegisterLoader {
   /*
    * Instantiate hook
    */
-  async [RegisterLoader.instantiate] (key, processAnonRegister) {
+  async [RegisterLoader.instantiate] (key) {
     const source = await fetchSource(key)
     await this.router.route(key, source)
-    // console.log('processAnonRegister', processAnonRegister)
   }
 }
 

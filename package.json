@@ -17,6 +17,7 @@
   },
   "dependencies": {
     "babel-plugin-syntax-dynamic-import": "latest",
+    "babel-plugin-transform-amd-system-wrapper": "^0.3.7",
     "babel-plugin-transform-es2015-modules-systemjs": "latest",
     "babel-standalone": "^6.26.0",
     "es-module-loader": "^2.2.8",
