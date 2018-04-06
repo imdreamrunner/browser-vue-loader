@@ -33,8 +33,6 @@ class BrowserVueLoader extends RegisterLoader {
 }
 
 // create the loader instance.
-const loader = new BrowserVueLoader()
+export const loader = new BrowserVueLoader()
 
-const loadVue = (entryUrl) => loader.import(entryUrl).then(m => m.default ? m.default : m)
-
-export default loadVue
+export const loadVue = (entryUrl) => loader.import(entryUrl).then(m => m.default ? m.default : m)

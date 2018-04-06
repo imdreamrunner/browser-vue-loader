@@ -23,7 +23,7 @@ export default class VueProcessor extends BaseProcessor {
     const script = parts.script.content
     const scriptKey = key + '#script'
 
-    await this.loader.router.routeTo('es6', scriptKey, script)
+    await this.loader.router.routeTo('js', scriptKey, script)
 
     transformedSource = transformedSource.replace('__vue_script__', scriptKey)
 
@@ -42,6 +42,6 @@ export default class VueProcessor extends BaseProcessor {
     transformedSource = transformedSource.replace('__vue_scopeId__', 'empty')
     transformedSource = transformedSource.replace('__vue_module_identifier__', 'empty')
 
-    await this.loader.router.routeTo('es6', key, transformedSource)
+    await this.loader.router.routeTo('js', key, transformedSource)
   }
 }

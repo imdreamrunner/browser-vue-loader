@@ -2,6 +2,7 @@ import * as babel from 'babel-standalone'
 import babelPluginTransformES2015ModulesSystemJS from 'babel-plugin-transform-es2015-modules-systemjs'
 import babelPluginSyntaxDynamicImport from 'babel-plugin-syntax-dynamic-import'
 import babelPluginTransformAmdSystemWrapper from 'babel-plugin-transform-amd-system-wrapper'
+import babelPluginTransformCjsSystemWrapper from 'babel-plugin-transform-cjs-system-wrapper'
 
 export function transpile(key, source, options) {
   const module = (options || {}).module || 'es'
@@ -10,6 +11,8 @@ export function transpile(key, source, options) {
 
   if (module === 'amd') {
     plugins = [babelPluginTransformAmdSystemWrapper]
+  } else if (module === 'commonjs') {
+    plugins = [babelPluginTransformCjsSystemWrapper]
   }
 
   // transform source with Babel

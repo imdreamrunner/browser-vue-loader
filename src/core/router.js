@@ -1,13 +1,13 @@
-import es6 from '../processors/es6'
+import js from '../processors/js'
 import css from '../processors/css'
 import vueSfc from '../processors/vue-sfc'
 import vueTemplate from '../processors/vue-template'
 
 const routingTable = [
   {
-    name: 'es6',
+    name: 'js',
     matcher: /.*\.js/,
-    processor: es6,
+    processor: js,
   },
   {
     name: 'vue-sfc',
