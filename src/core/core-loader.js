@@ -1,7 +1,7 @@
 import RegisterLoader from 'es-module-loader/core/register-loader'
 import { ModuleNamespace } from 'es-module-loader/core/loader-polyfill'
 import fetchSource from './fetch-source'
-import { splitKey, constructKey } from './key-utils'
+import { splitKey, constructKey, lookupNpmPackage, addDefaultExtension } from './key-utils'
 import Router from './router'
 
 class BrowserVueLoader extends RegisterLoader {
@@ -18,13 +18,22 @@ class BrowserVueLoader extends RegisterLoader {
    *  - URL resolution if "key" is a relative URL (eg './x' will resolve to parentKey as a URL, or the baseURI)
    *
    */
-  [RegisterLoader.resolve] (key, parentKey) {
+  async [RegisterLoader.resolve] (key, parentKey) {
     let {processor, url} = splitKey(key)
     let {url: parentUrl} = splitKey(parentKey)
     let relativeResolved = super[RegisterLoader.resolve](url, parentUrl)
     if (relativeResolved) {
       url = relativeResolved
     }
+    if (url.indexOf('://') < 0 && url.indexOf('.') < 0) {
+      // NPM package
+      const npmPackage = await lookupNpmPackage(url)
+      if (npmPackage) {
+        url = npmPackage
+        processor = processor || 'commonjs'
+      }
+    }
+    url = addDefaultExtension(url)
     return constructKey({processor, url})
   }
 

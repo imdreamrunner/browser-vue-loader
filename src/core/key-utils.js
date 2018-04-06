@@ -1,12 +1,22 @@
 const defaultExtension = "js"
 
-const addDefaultExtension = url => {
+export const addDefaultExtension = url => {
   const pathSplits = url.split('/')
   const filename = pathSplits[pathSplits.length - 1]
   if (url.indexOf('http') >= 0 && filename.indexOf('.') < 0) {
     url = url + '.' + defaultExtension
   }
   return url
+}
+
+const npmBlacklist = ['empty', 'component-normalizer']
+
+export const lookupNpmPackage = async name => {
+  if (npmBlacklist.indexOf(name) >= 0) return null
+  const unpkgUrl = `https://unpkg.com/${name}`
+  const response = await fetch(unpkgUrl)
+  if (response.url) return response.url
+  return null
 }
 
 export const splitKey = key => {
@@ -19,7 +29,6 @@ export const splitKey = key => {
   } else {
     url = splits[0]
   }
-  url = addDefaultExtension(url)
   return { processor, url }
 }
 

@@ -32,7 +32,7 @@
 </template>
 
 <script>
-  import Vue from 'commonjs!https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js';
+  import Vue from 'vue';
 
   export default {
     data () {
