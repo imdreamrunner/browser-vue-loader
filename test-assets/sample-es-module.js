@@ -1,14 +1,10 @@
 import another from './another-module.js';
-import componentNormalizer from 'component-normalizer';
 
-export function a() {
+export function currentModuleFunction() {
   return 1;
 }
 
-export function b() {
+export function loadedFromOtherModule() {
   return another;
 }
 
-console.log('componentNormalizer', componentNormalizer)
-
-export const cn = componentNormalizer;

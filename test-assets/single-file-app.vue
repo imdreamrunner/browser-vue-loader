@@ -1,15 +1,14 @@
 <template>
   <div class="app">
-    <h1>Hello: {{ msg }}</h1>
+    <h1>{{ msg }}</h1>
   </div>
 </template>
 
 <script>
-  console.log('App is loaded')
   export default {
     data () {
       return {
-        msg: 'World'
+        msg: 'hello'
       }
     }
   }

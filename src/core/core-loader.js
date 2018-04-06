@@ -3,7 +3,6 @@ import { ModuleNamespace } from 'es-module-loader/core/loader-polyfill'
 import fetchSource from './fetch-source'
 import resolveKey from './resolve-key'
 import Router from './router'
-import * as componentNormalizer from '../runtime/component-normalizer'
 
 class BrowserVueLoader extends RegisterLoader {
   constructor (baseKey) {
@@ -34,12 +33,8 @@ class BrowserVueLoader extends RegisterLoader {
   }
 }
 
-
+// create the loader instance.
 const loader = new BrowserVueLoader()
-
-const componentNormalizerModule = new ModuleNamespace(componentNormalizer)
-loader.registry.set('component-normalizer', componentNormalizerModule)
-window.componentNormalizerModule = componentNormalizerModule
 
 const loadVue = (entryUrl) => loader.import(entryUrl).then(m => m.default ? m.default : m)
 

@@ -1,5 +1,6 @@
 import { ModuleNamespace } from 'es-module-loader/core/loader-polyfill'
-import { parseComponent, compile } from 'vue-template-compiler'
+import { parseComponent } from 'vue-template-compiler'
+import * as componentNormalizer from './component-normalizer'
 import BaseProcessor from '../base-processor'
 import componentTemplate from 'raw-loader!./component-template.txt'
 
@@ -11,6 +12,12 @@ export default class VueProcessor extends BaseProcessor {
 
     const parts = parseComponent(source)
     console.log('parts', parts)
+
+    // register component-normalizer if it's not inside the registry.
+    if (!this.loader.registry.has('component-normalizer')) {
+      const componentNormalizerModule = new ModuleNamespace(componentNormalizer)
+      this.loader.registry.set('component-normalizer', componentNormalizerModule)
+    }
 
     // <script>
     const script = parts.script.content
