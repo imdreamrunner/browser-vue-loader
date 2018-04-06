@@ -1,18 +1,11 @@
 import { transpile } from './babel-helper'
 import BaseProcessor from '../base-processor'
 
-export default class BabelProcessor extends BaseProcessor {
-  process(key, source, options) {
+export class JsProcessor extends BaseProcessor {
+  process(key, source, module) {
     console.log('process', key)
 
-    const transformOptions = options || {}
-
-    if (key.indexOf('!') >= 0) {
-      const module = key.split('!')[0]
-      transformOptions.module = module
-    }
-
-    const transformedCode = transpile(key, source, transformOptions)
+    const transformedCode = transpile(key, source, {module})
 
     console.log('transformedCode', key, {transformedCode})
 
@@ -27,5 +20,23 @@ export default class BabelProcessor extends BaseProcessor {
 
     evalFunction.call({})
     console.log('processed', key)
+  }
+}
+
+export class EsModuleProcessor extends JsProcessor {
+  process(key, source) {
+    super.process(key, source, 'es')
+  }
+}
+
+export class AmdModuleProcessor extends JsProcessor {
+  process(key, source) {
+    super.process(key, source, 'amd')
+  }
+}
+
+export class CommonJsModuleProcessor extends JsProcessor {
+  process(key, source) {
+    super.process(key, source, 'commonjs')
   }
 }

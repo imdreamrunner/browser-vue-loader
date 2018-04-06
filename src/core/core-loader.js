@@ -1,7 +1,7 @@
 import RegisterLoader from 'es-module-loader/core/register-loader'
 import { ModuleNamespace } from 'es-module-loader/core/loader-polyfill'
 import fetchSource from './fetch-source'
-import resolveKey from './resolve-key'
+import { splitKey, constructKey } from './key-utils'
 import Router from './router'
 
 class BrowserVueLoader extends RegisterLoader {
@@ -19,16 +19,26 @@ class BrowserVueLoader extends RegisterLoader {
    *
    */
   [RegisterLoader.resolve] (key, parentKey) {
-    let relativeResolved = super[RegisterLoader.resolve](key, parentKey) || key
-    return resolveKey(relativeResolved)
+    let {processor, url} = splitKey(key)
+    let {url: parentUrl} = splitKey(parentKey)
+    let relativeResolved = super[RegisterLoader.resolve](url, parentUrl)
+    if (relativeResolved) {
+      url = relativeResolved
+    }
+    return constructKey({processor, url})
   }
 
   /*
    * Instantiate hook
    */
   async [RegisterLoader.instantiate] (key) {
-    const source = await fetchSource(key)
-    await this.router.route(key, source)
+    const {processor, url} = splitKey(key)
+    const source = await fetchSource(url)
+    if (processor) {
+      await this.router.routeTo(processor, key, source)
+    } else {
+      await this.router.route(key, source)
+    }
   }
 }
 

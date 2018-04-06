@@ -4,20 +4,43 @@ Browser Vue Loader
 Browser Vue Loader is a single file JavaScript library
 that loads untranspile Vue applications into the browsers.
 
+This loader is ideal for rapid prototyping. With the loader,
+you don't have to configure built tools, but rather write
+the application code and run them in the browser.
+
+We prefer convention over configuration in this loader.
+It's pre-configured with NPM module loaders, CSS processors,
+image loaders and etc.
+
 ## Usage
 
-Include Vue and the loader into your HTML file.
+### The Preferred Way Is
+
+Include the loader and write your script within a `<script type="boom!">`.
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
-<script src="dist/browser-vue-loader.js"></script>
+<script src="https://unpkg.com/browser-vue-loader"></script>
+
+<script type="boom!">
+import Vue from 'vue';
+import App from './todo-mvc-import-vue/App.vue';
+new Vue({
+  render: h => h(App)
+}).$mount('#app')
+</script>
 ```
 
-And you can now load Vue modules by the `loadVue` function. The loaded module
+### But You Also Can
+
+Include Vue and the loader into your HTML file.
+And you can load Vue modules by the `loadVue` function. The loaded module
 will be returned as a promise.
 
 ```html
 <div id="app"></div>
+
+<script src="https://unpkg.com/vue"></script>
+<script src="https://unpkg.com/browser-vue-loader"></script>
 
 <script>
 loadVue('./App.vue').then(App => {
@@ -28,7 +51,7 @@ loadVue('./App.vue').then(App => {
 </script>
 ```
 
-## What is supported
+## What Is Supported
 
 Besides Vue's single file component (SFC), the following resources will be supported
 if you load them via the `import` statement in JavaScript or the `src`

@@ -1,28 +1,40 @@
-import js from '../processors/js'
-import css from '../processors/css'
-import vueSfc from '../processors/vue-sfc'
-import vueTemplate from '../processors/vue-template'
+import {EsModuleProcessor, AmdModuleProcessor, CommonJsModuleProcessor} from '../processors/js'
+import CssProcessor from '../processors/css'
+import VueSfcProcessor from '../processors/vue-sfc'
+import VueTemplateProcessor from '../processors/vue-template'
 
 const routingTable = [
   {
     name: 'js',
     matcher: /.*\.js/,
-    processor: js,
+    processor: EsModuleProcessor,
+  },
+  {
+    name: 'es',
+    processor: EsModuleProcessor,
+  },
+  {
+    name: 'amd',
+    processor: AmdModuleProcessor,
+  },
+  {
+    name: 'commonjs',
+    processor: CommonJsModuleProcessor,
   },
   {
     name: 'vue-sfc',
     matcher: /.*\.vue/,
-    processor: vueSfc,
+    processor: VueSfcProcessor,
   },
   {
     name: 'vue-template',
     matcher: /.*\.vue/,
-    processor: vueTemplate,
+    processor: VueTemplateProcessor,
   },
   {
     name: 'css',
     matcher: /.*\.css/,
-    processor: css,
+    processor: CssProcessor,
   },
 ]
 
@@ -39,7 +51,7 @@ export default class Router {
 
   async route(key, data) {
     for (let rule of this.table) {
-      if (rule.matcher.test(key)) {
+      if (rule.matcher && rule.matcher.test(key)) {
         return rule.processor.process(key, data)
       }
     }
