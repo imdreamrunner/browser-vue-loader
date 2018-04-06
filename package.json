@@ -5,9 +5,11 @@
   "author": "Ivor Xinzi Zhou",
   "license": "MIT",
   "homepage": "https://github.com/imdreamrunner/browser-vue-loader",
+  "main": "dist/browser-vue-loader.js",
   "scripts": {
     "dev": "cross-env NODE_ENV=dev webpack-dev-server --progress --mode development --config webpack.config.dev.js",
-    "build": "webpack -p --progress --mode production --config webpack.config.build.js"
+    "build": "webpack -p --progress --mode production --config webpack.config.build.js",
+    "prepack": "npm run build"
   },
   "repository": {
     "type": "git",

@@ -7,31 +7,40 @@
   <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
 </head>
 <body>
-<!--
-<div class="helper">Please open debugger.</div>
--->
+<div id="helper">
+  <ul>
+    <li>
+      <button onclick="loadSampleEsModule()">Load Sample ES Module</button>
+    </li>
+    <li>
+      <button onclick="loadVueSFC()">Load Sample Vue Single File Component</button>
+    </li>
+    <li>
+      <button onclick="loadTodoMVC()">Load Todo MVC</button>
+    </li>
+  </ul>
+</div>
 <div id="app"></div>
 <script>
-  window.onload = function () {
-    // loadVue('./test-assets/sample-es-module.js').then(function (m) {
-    //   console.log('sampleEsModule', m)
-    //   window.sampleEsModule = m
-    // });
-    // loadVue('./test-assets/single-file-app.vue').then(App => {
-    //   window.App = App
-    //   console.log('App', App)
-    //   new Vue({
-    //     render: h => h(App)
-    //   }).$mount('#app')
-    // });
-    loadVue('./test-assets/todo-mvc/App.vue').then(App => {
-      window.App = App
-      console.log('App', App)
-      new Vue({
-        render: h => h(App)
-      }).$mount('#app')
-    });
+  function dynamicLoad(moduleName, modulePath, isVueModule) {
+    loadVue(modulePath).then(function (m) {
+      if (isVueModule) {
+        new Vue({
+          render: h => h(m)
+        }).$mount('#app')
+        document.getElementById('helper').remove()
+      } else {
+        console.log('Module is loaded.')
+        console.log(moduleName, m)
+        window[moduleName] = m
+        document.getElementById('helper').innerHTML = 'Please open the debugger.'
+        debugger
+      }
+    })
   }
+  const loadSampleEsModule = () => dynamicLoad('sampleEsModule', './test-assets/sample-es-module.js', false)
+  const loadVueSFC = () => dynamicLoad('vueSingleFileComponent', './test-assets/single-file-app.vue', true)
+  const loadTodoMVC = () => dynamicLoad('vueTodoMvc', './test-assets/todo-mvc/App.vue', true)
 </script>
 </body>
 </html>
