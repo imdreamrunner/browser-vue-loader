@@ -1,17 +1,17 @@
 {
-  "name": "webpack-boilerplate",
-  "version": "4.0.0",
-  "description": "Plain webpack 4 Boilerplate with Babel, SASS and lodash on board",
-  "author": "Christoph von Gellhorn",
+  "name": "browser-vue-loader",
+  "version": "0.0.0",
+  "description": "Load Vue module",
+  "author": "Ivor Xinzi Zhou",
   "license": "MIT",
-  "homepage": "https://github.com/cvgellhorn/webpack-boilerplate",
+  "homepage": "https://github.com/imdreamrunner/browser-vue-loader",
   "scripts": {
     "dev": "cross-env NODE_ENV=dev webpack-dev-server --progress --mode development --config webpack.config.dev.js",
     "build": "webpack -p --progress --mode production --config webpack.config.build.js"
   },
   "repository": {
     "type": "git",
-    "url": "https://cvgellhorn@github.com/cvgellhorn/webpack-boilerplate.git"
+    "url": "git@github.com:imdreamrunner/browser-vue-loader.git"
   },
   "dependencies": {
     "babel-plugin-syntax-dynamic-import": "latest",
