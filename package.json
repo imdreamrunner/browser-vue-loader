@@ -23,6 +23,7 @@
     "babel-standalone": "^6.26.0",
     "es-module-loader": "^2.2.8",
     "lodash": "^4.17.5",
+    "uuid": "^3.2.1",
     "vue-template-compiler": "^2.5.16"
   },
   "devDependencies": {

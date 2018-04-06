@@ -3,11 +3,11 @@ import BaseProcessor from '../base-processor'
 
 export class JsProcessor extends BaseProcessor {
   process(key, source, module) {
-    console.log('process', key)
+    // console.log('process', key)
 
     const transformedCode = transpile(key, source, {module})
 
-    console.log('transformedCode', key, {transformedCode})
+    // console.log('transformedCode', key, {transformedCode})
 
     const register = this.getRegister(key)
     const registerDynamic = this.getRegisterDynamic(key)
@@ -19,7 +19,7 @@ export class JsProcessor extends BaseProcessor {
     }
 
     evalFunction.call({})
-    console.log('processed', key)
+    // console.log('processed', key)
   }
 }
 
