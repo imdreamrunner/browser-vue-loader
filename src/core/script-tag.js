@@ -1,3 +1,11 @@
+/**
+ * This module exports a function {@link processScriptTag} that should be call
+ * when the module is loaded by the browser.
+ *
+ * Parts of the code in this module is modified from
+ * https://github.com/ModuleLoader/browser-es-module-loader/blob/master/src/browser-es-module-loader.js
+ */
+
 import {loader} from './core-loader'
 import {generateUniqueUrl} from './unique'
 
@@ -15,7 +23,6 @@ const doProcessScriptTag = () => {
 }
 
 export const processScriptTag = () => {
-  // simple DOM ready
   if (document.readyState === 'complete') {
     doProcessScriptTag()
   } else {
