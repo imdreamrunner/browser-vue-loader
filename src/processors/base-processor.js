@@ -1,10 +1,23 @@
+/**
+ * This file contains the {@link BaseProcessor} that will be extended
+ * by all processors.
+ */
+
 import { ModuleNamespace } from 'es-module-loader/core/loader-polyfill'
 
+/**
+ * The base processor.
+ */
 export default class BaseProcessor {
   constructor (loader) {
     this._loader = loader
   }
 
+  /**
+   * Retrieve a module from the registry by its key.
+   * This method is usually used by the subclasses.
+   * @param {string} key the key of the module.
+   */
   getModuleByKey = (key) => this._loader.registry.get(key)
 
   sendToRouter = async (name, key, source, ...extra) => this._loader.router.routeTo(name, key, source, ...extra)
