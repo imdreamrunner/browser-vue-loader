@@ -53,20 +53,62 @@ loadVue('./App.vue').then(App => {
 </script>
 ```
 
-## What Is Supported
+## Supporting Features
 
-Besides Vue's single file component (SFC), the following resources will be supported
-if you load them via the `import` statement in JavaScript or the `src`
-attributes in Vue SFC's `<template>` `<script>` or `<style>` tags.
+### Loads Vue single file components and ES modules
 
-Supporting list
+The `loadVue` methods supports both Vue single file components and ES modules.
 
-* Vue's single file component (`*.vue`)
-* CSS (`*.css`)
+Examples:
 
-Coming soon:
+* [Load Vue SFC](https://imdreamrunner.github.io/browser-vue-loader/examples/single-file-component/)
+* [Load ES Module](https://imdreamrunner.github.io/browser-vue-loader/examples/es-modules/)
 
-* SASS (`*.sass`, `*.scss`)
+In `<script type="boom!">` or your source code, you can also use the import statement
+to load another module. The name of the loaded module must be a relative or full
+URL, such as `./App.vue` or `http://example.com/path/to/App.vue`.
+
+```javascript
+import App from './App.vue';
+```
+
+The module system works exactly like the current
+[WhatWG loader specification](https://whatwg.github.io/loader/)
+which defines the behavior of loading JavaScript modules from a
+JavaScript host environment.
+
+
+Example:
+
+* [TODO MVC](https://imdreamrunner.github.io/browser-vue-loader/examples/todo-mvc/)
+
+
+### Loads a CommonJS or AMD module from NPM registry
+
+The loader can directly load a CommonJS or AMD module from NPM registry,
+if the name of the module cannot be resolved to a valid URL.
+
+For example, by writing
+
+```javascript
+import Vue from 'vue';
+```
+
+The loader will realise that the string `vue` is not a valid URL, so
+if will search for the package use the [unpkg.com](https://unpkg.com/)
+CDN. The actual URL of the module will be resolved to
+`https://unpkg.com/vue@2.5.16/dist/vue.js`.
+
+By default, the loader will process the module as a CommonJS module.
+You can specify the process by adding the prefix `<processor>!` to the
+module name.
+
+For example, the following 2 import statements are working.
+
+```javascript
+import Vue from 'commonjs!vue';  // Treat the module as a CommonJS module
+import _ from 'amd!lodash';  // Treat the module as an AMD module
+```
 
 ## Contributors's Guide
 
