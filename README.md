@@ -1,3 +1,5 @@
+![Browser Vue Loader](./banner.png)
+
 Browser Vue Loader
 ==================
 
@@ -74,3 +76,8 @@ To develop:
 npm install
 npm run dev
 ```
+
+## Credits
+
+The cat in our banner is from the
+[openclipart.org](https://openclipart.org/detail/85915/cat-6).
