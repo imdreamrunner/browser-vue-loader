@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+  <script src="/dist/browser-vue-loader.js"></script>
+</head>
+<body>
+<div>Please open the debugger.</div>
+<script>
+  loadVue('./sample-es-module').then(function (m) {
+    console.log('Module is loaded.')
+    console.log('module', m)
+    window['module'] = m
+  })
+</script>
+</body>
+</html>

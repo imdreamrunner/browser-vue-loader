@@ -1,7 +1,6 @@
 const path = require('path')
 const merge = require('webpack-merge')
 const webpackConfig = require('./webpack.config')
-const appHtmlTitle = 'Browser Vue Loader'
 
 module.exports = merge(webpackConfig, {
 
@@ -9,7 +8,8 @@ module.exports = merge(webpackConfig, {
 
   output: {
     pathinfo: true,
-    publicPath: '/',
+    publicPath: '/dist',
+    path: path.join(__dirname, 'dist'),
     filename: '[name].js'
   }
 

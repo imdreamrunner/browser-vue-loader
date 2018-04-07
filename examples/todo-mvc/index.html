@@ -4,13 +4,13 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width">
   <title>Browser Vue Loader - Script Tag</title>
-  <script src="/browser-vue-loader.js"></script>
+  <script src="/dist/browser-vue-loader.js"></script>
 </head>
 <body>
 <div id="app"></div>
 <script type="boom!">
 import Vue from 'vue';
-import App from './todo-mvc-import-vue/App.vue';
+import App from './App.vue';
 new Vue({
   render: h => h(App)
 }).$mount('#app')
