@@ -1,4 +1,3 @@
-import { ModuleNamespace } from 'es-module-loader/core/loader-polyfill'
 import { parseComponent } from 'vue-template-compiler'
 import md5 from 'md5'
 import * as componentNormalizer from './component-normalizer'
@@ -15,21 +14,20 @@ export default class VueProcessor extends BaseProcessor {
     console.log('parts', parts)
 
     // register component-normalizer if it's not inside the registry.
-    if (!this.loader.registry.has('component-normalizer')) {
-      const componentNormalizerModule = new ModuleNamespace(componentNormalizer)
-      await this.loader.registry.set('component-normalizer', componentNormalizerModule)
+    if (!this.getModuleByKey('component-normalizer')) {
+      this.registerModuleNamespace('component-normalizer', componentNormalizer)
     }
 
     // <script>
     const script = parts.script.content
     const scriptKey = key + '#script'
-    await this.loader.router.routeTo('js', scriptKey, script)
+    await this.sendToRouter('js', scriptKey, script)
     transformedSource = transformedSource.replace('__vue_script__', scriptKey)
 
     // <template>
     if (parts.template) {
       const templateKey = key + '#template'
-      await this.loader.router.routeTo('vue-template', templateKey, parts.template.content)
+      await this.sendToRouter('vue-template', templateKey, parts.template.content)
       transformedSource = transformedSource.replace('__vue_template__', templateKey)
 
       const functionalTemplate = parts.template.attrs && parts.template.attrs.functional || false
@@ -38,12 +36,12 @@ export default class VueProcessor extends BaseProcessor {
 
     // <style>
     const styleKey = key + '#style'
-    await this.loader.router.routeTo('css', styleKey, parts.styles[0].content)
+    await this.sendToRouter('css', styleKey, parts.styles[0].content)
     transformedSource = transformedSource.replace('__vue_styles__', styleKey)
 
     const moduleId = 'data-v-' + md5(key)
     transformedSource = transformedSource.replace('__vue_scopeId__', moduleId)
 
-    await this.loader.router.routeTo('js', key, transformedSource)
+    await this.sendToRouter('js', key, transformedSource)
   }
 }

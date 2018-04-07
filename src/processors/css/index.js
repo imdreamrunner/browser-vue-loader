@@ -1,5 +1,4 @@
 import BaseProcessor from '../base-processor'
-import { ModuleNamespace } from 'es-module-loader/core/loader-polyfill'
 
 export default class CssProcessor extends BaseProcessor {
   process(key, source) {
@@ -8,6 +7,6 @@ export default class CssProcessor extends BaseProcessor {
       styleElement.appendChild(document.createTextNode(source))
       document.head.appendChild(styleElement)
     }
-    this.loader.registry.set(key, new ModuleNamespace({default: injectStyle}))
+    this.registerModuleNamespace(key, {default: injectStyle})
   }
 }
