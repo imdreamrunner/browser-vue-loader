@@ -72,9 +72,9 @@ URL, such as `./App.vue` or `http://example.com/path/to/App.vue`.
 import App from './App.vue';
 ```
 
-The module system works exactly like the current
-[WhatWG loader specification](https://whatwg.github.io/loader/)
-which defines the behavior of loading JavaScript modules from a
+The module system is based on the
+[WhatWG loader specification](https://whatwg.github.io/loader/),
+which describes the behavior of loading JavaScript modules from a
 JavaScript host environment.
 
 
