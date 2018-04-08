@@ -14,10 +14,10 @@ export class ScssProcessor extends BaseProcessor {
   async process(key, source, options) {
     try {
       const compiled = await compileSass(source)
-      this.sendToRouter('css', key, compiled.text, options)
+      await this.sendToRouter('css', key, compiled.text, options)
     } catch (ex) {
       console.log('ex', ex)
-      this.sendToRouter('css', key, '', options)
+      await this.sendToRouter('css', key, '', options)
     }
   }
 }

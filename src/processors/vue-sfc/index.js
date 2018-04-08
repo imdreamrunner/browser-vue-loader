@@ -60,5 +60,7 @@ export default class VueProcessor extends BaseProcessor {
     transformedSource = transformedSource.replace('__vue_styles__', styleExecuteFunction)
 
     await this.sendToRouter('js', key, transformedSource)
+
+    console.log('done sfc')
   }
 }

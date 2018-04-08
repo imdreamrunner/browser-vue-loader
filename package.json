@@ -26,7 +26,9 @@
     "md5": "^2.2.1",
     "postcss": "^6.0.21",
     "postcss-selector-parser": "^3.1.1",
+    "postcss-value-parser": "^3.3.0",
     "sass.js": "^0.10.9",
+    "sugarss": "^1.0.1",
     "uuid": "^3.2.1",
     "vue-template-compiler": "^2.5.16"
   },

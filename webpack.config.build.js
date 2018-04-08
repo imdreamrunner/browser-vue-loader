@@ -14,6 +14,10 @@ module.exports = merge(webpackConfig, {
     filename: '[name].js',
   },
 
+  plugins: [
+    new CleanWebpackPlugin(['dist'])
+  ],
+
   optimization: {
     minimizer: [
       new UglifyJsPlugin({
