@@ -1,5 +1,6 @@
 import {EsModuleProcessor, AmdModuleProcessor, CommonJsModuleProcessor} from '../processors/js'
 import CssProcessor from '../processors/css'
+import {ScssProcessor} from '../processors/sass'
 import VueSfcProcessor from '../processors/vue-sfc'
 import VueTemplateProcessor from '../processors/vue-template'
 
@@ -36,6 +37,11 @@ const routingTable = [
     matcher: /.*\.css/,
     processor: CssProcessor,
   },
+  {
+    name: 'scss',
+    matcher: /.*\.scss/,
+    processor: ScssProcessor,
+  },
 ]
 
 export default class Router {
@@ -49,20 +55,20 @@ export default class Router {
     })
   }
 
-  async route(key, data) {
+  async route(key, data, ...args) {
     for (let rule of this.table) {
       if (rule.matcher && rule.matcher.test(key)) {
-        return rule.processor.process(key, data)
+        return rule.processor.process(key, data, ...args)
       }
     }
     throw new Error(`No processor to handle "${key}".`)
   }
 
-  async routeTo(name, key, data) {
+  async routeTo(name, key, data, ...args) {
     if (Object.keys(this.processorMap).indexOf(name) < 0) {
       throw new Error(`No processor named "${name}".`)
     }
     const processor = this.processorMap[name]
-    return processor.process(key, data)
+    return processor.process(key, data, ...args)
   }
 }

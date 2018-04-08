@@ -2,8 +2,10 @@ import componentNormalizer from 'component-normalizer'
 
 import script from '__vue_script__'
 import { render, staticRenderFns } from '__vue_template__'
-import styles from '__vue_styles__'
 
+__vue_style_imports___
+
+const styles = __vue_styles__
 const templateFunctional = __vue_template_functional__
 const scopeId = '__vue_scopeId__'
 const moduleIdentifier = null

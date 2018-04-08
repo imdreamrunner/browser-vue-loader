@@ -35,12 +35,29 @@ export default class VueProcessor extends BaseProcessor {
     }
 
     // <style>
-    const styleKey = key + '#style'
-    await this.sendToRouter('css', styleKey, parts.styles[0].content)
-    transformedSource = transformedSource.replace('__vue_styles__', styleKey)
-
     const moduleId = 'data-v-' + md5(key)
     transformedSource = transformedSource.replace('__vue_scopeId__', moduleId)
+
+    const styleImportStatements = []
+    const styleExecuteStatements = []
+    for (let style of parts.styles) {
+      const styleKey = key + '#style-' + md5(style.content)
+      const styleVariable = 'style' + md5(style.content)
+      const scoped = style.scoped
+      const styleOptions = {
+        moduleId,
+        scoped
+      }
+      const lang = style.lang || 'css'
+      await this.sendToRouter(lang, styleKey, style.content, styleOptions)
+      styleImportStatements.push(`import ${styleVariable} from "${styleKey}"`)
+      styleExecuteStatements.push(`${styleVariable}()`)
+    }
+    const styleExecuteFunction = `function () {
+      ${styleExecuteStatements.join('\n')}
+    }`
+    transformedSource = transformedSource.replace('__vue_style_imports___', styleImportStatements.join('\n'))
+    transformedSource = transformedSource.replace('__vue_styles__', styleExecuteFunction)
 
     await this.sendToRouter('js', key, transformedSource)
   }

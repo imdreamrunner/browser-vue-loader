@@ -20,6 +20,8 @@ export default class BaseProcessor {
    */
   getModuleByKey = (key) => this._loader.registry.get(key)
 
+  loadModuleByKey = async (key) => this._loader.import(key)
+
   sendToRouter = async (name, key, source, ...extra) => this._loader.router.routeTo(name, key, source, ...extra)
 
   registerModuleNamespace = (key, module) => this._loader.registry.set(key, new ModuleNamespace(module))
