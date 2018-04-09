@@ -40,9 +40,10 @@ export default class VueProcessor extends BaseProcessor {
 
     const styleImportStatements = []
     const styleExecuteStatements = []
+    let counter = 0
     for (let style of parts.styles) {
       const styleKey = key + '#style-' + md5(style.content)
-      const styleVariable = 'style' + md5(style.content)
+      const styleVariable = 'style' + counter
       const scoped = style.scoped
       const styleOptions = {
         moduleId,
@@ -50,8 +51,9 @@ export default class VueProcessor extends BaseProcessor {
       }
       const lang = style.lang || 'css'
       await this.sendToRouter(lang, styleKey, style.content, styleOptions)
-      styleImportStatements.push(`import ${styleVariable} from "${styleKey}"`)
+      styleImportStatements.push(`import { injectStyle as ${styleVariable} } from "${styleKey}"`)
       styleExecuteStatements.push(`${styleVariable}()`)
+      counter += 1
     }
     const styleExecuteFunction = `function () {
       ${styleExecuteStatements.join('\n')}

@@ -13,12 +13,15 @@ const postcss = require("postcss")
 
 // internal tooling
 const joinMedia = require("./join-media")
-const resolveId = require("./resolve-id").default
-const loadContent = require("./load-content")
 const processContent = require("./process-content")
 const parseStatements = require("./parse-statements")
 
+let resolveId
+let loadContent
+
 function AtImport(options) {
+  resolveId = options.resolver
+  loadContent = options.instantiator
   options = Object.assign(
     {
       root: process.cwd(),
@@ -238,7 +241,7 @@ function loadImportContent(result, stmt, filename, options, state) {
     state.importedFiles[filename][media] = true
   }
 
-  return Promise.resolve(options.load(filename, options)).then(content => {
+  return options.load(filename, options).then(content => {
     if (content.trim() === "") {
       result.warn(`${filename} is empty`, { node: atRule })
       return
