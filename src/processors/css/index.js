@@ -1,34 +1,45 @@
 import postcss from 'postcss'
 import BaseProcessor from '../base-processor'
+import { fetchContent } from '../../core/fetch-source'
 import atImport from './postcss-plugins/at-import'
 import scopeId from './postcss-plugins/scope-id'
 
-export default class CssProcessor extends BaseProcessor {
-  async process(key, source, options = {}) {
-    const resolver = async (key, base) => {
-      console.log('resolve', key)
-      if (key.indexOf('://') >= 0) {
-        return key
-      }
-      return `${base}/${key}`
+/**
+ * This plugin is to handle @import statement inside the CSS file.
+ * @returns {object} the plugin
+ */
+const atImportPlugin = (processor) => {
+  const resolver = async (key, base) => {
+    console.log('resolve', key)
+    if (key.indexOf('://') >= 0) {
+      return key
     }
-    const instantiator = async (key) => {
-      const loadedModule = this.getModuleByKey(key)
-      if (loadedModule) {
-        console.log('load cached module')
-        return loadedModule.css
-      }
-      const response = await fetch(key)
-      const source = await response.text()
-      await this.sendToRouter('css', key, source)
-      return this.getModuleByKey(key).css
+    return `${base}/${key}`
+  }
+  const instantiator = async (key) => {
+    // first, check if the module to load is in our loader's registry.
+    // if yes, directly return it.
+    const loadedModule = processor.getModuleByKey(key)
+    if (loadedModule) {
+      return loadedModule.css
     }
+    // otherwise, we fetch this module from the network.
+    const source = await fetchContent(key)
+    // and let the processor handle the file
+    await processor.sendToRouter('css', key, source)
+    return processor.getModuleByKey(key).css
+    // TODO It's better if we could use the loader's import method to load the module.
+  }
+  return atImport({
+    resolver,
+    instantiator,
+  })
+}
 
+export default class CssProcessor extends BaseProcessor {
+  async process (key, source, options = {}) {
     const plugins = [
-      atImport({
-        resolver,
-        instantiator,
-      }),
+      atImportPlugin(this),
     ]
     if (options.scoped) {
       plugins.push(scopeId({id: options.moduleId}))
@@ -50,7 +61,7 @@ export default class CssProcessor extends BaseProcessor {
     }
     if (compiled.messages) {
       compiled.messages.forEach(message => {
-        const { type, file }= message
+        const {type, file} = message
         console.log('msg', type, message)
       })
     }
@@ -63,6 +74,6 @@ export default class CssProcessor extends BaseProcessor {
       document.head.appendChild(styleElement)
     }
 
-    this.registerModuleNamespace(key, { injectStyle, css: compiledCss })
+    this.registerModuleNamespace(key, {injectStyle, css: compiledCss})
   }
 }

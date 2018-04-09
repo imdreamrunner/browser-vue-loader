@@ -1,6 +1,6 @@
 import RegisterLoader from 'es-module-loader/core/register-loader'
 import { ModuleNamespace } from 'es-module-loader/core/loader-polyfill'
-import fetchSource from './fetch-source'
+import { fetchContent } from './fetch-source'
 import { splitKey, constructKey, lookupNpmPackage, addDefaultExtension } from './key-utils'
 import Router from './router'
 
@@ -43,7 +43,7 @@ class BrowserVueLoader extends RegisterLoader {
   async [RegisterLoader.instantiate] (key) {
     console.log('instantiate', key)
     const {processor, url} = splitKey(key)
-    const source = await fetchSource(url)
+    const source = await fetchContent(url)
     if (processor) {
       await this.router.routeTo(processor, key, source)
     } else {
