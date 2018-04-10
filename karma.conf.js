@@ -1,6 +1,5 @@
 module.exports = (config) => {
-  config.set({
-
+  const customConfig = {
     files: [
       'node_modules/babel-polyfill/dist/polyfill.js',
       { pattern: 'dist/*.js', watched: true, served: true, included: false },
@@ -35,6 +34,13 @@ module.exports = (config) => {
       }
     },
 
+    customLaunchers: {
+      ChromeHeadlessNoSandbox: {
+        base: 'ChromeHeadless',
+        flags: ['--no-sandbox']
+      }
+    },
+
     plugins: [
       require('karma-mocha'),
       require('karma-browserify'),
@@ -43,5 +49,11 @@ module.exports = (config) => {
     ],
 
     browsers: ['Chrome']
-  })
+  }
+
+  if (process.env.TRAVIS) {
+    customConfig.browsers = ['ChromeHeadlessNoSandbox'];
+  }
+
+  config.set(customConfig)
 }
