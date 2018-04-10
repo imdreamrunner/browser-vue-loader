@@ -26,15 +26,18 @@ export default class BaseProcessor {
 
   registerModuleNamespace = (key, module) => this._loader.registry.set(key, new ModuleNamespace(module))
 
-  registerEsSourceCode(key, source) {
+  registerEsSourceCode (key, source) {
     const register = (...args) => this._loader.register(key, ...args)
     const registerDynamic = (...args) => this._loader.registerDynamic(key, ...args)
-    function evalFunction() {
+    function evalFunction () {
+      /* eslint-disable no-unused-vars */
+      /* eslint-disable no-eval */
       // This variable is needed for evaluating the transformed code.
       const System = {register, registerDynamic}
       eval(source)
+      /* eslint-enable no-unused-vars */
+      /* eslint-enable no-eval */
     }
     evalFunction.call({})
   }
-
 }

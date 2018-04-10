@@ -2,7 +2,7 @@ import { parseComponent } from 'vue-template-compiler'
 import md5 from 'md5'
 import * as componentNormalizer from './component-normalizer'
 import BaseProcessor from '../base-processor'
-import componentTemplate from 'raw-loader!./component-template.txt'
+import componentTemplate from './component-template.txt'
 
 export default class VueProcessor extends BaseProcessor {
   async process (key, source) {
@@ -28,7 +28,7 @@ export default class VueProcessor extends BaseProcessor {
       await this.sendToRouter('vue-template', templateKey, parts.template.content)
       transformedSource = transformedSource.replace('__vue_template__', templateKey)
 
-      const functionalTemplate = parts.template.attrs && parts.template.attrs.functional || false
+      const functionalTemplate = (parts.template.attrs && parts.template.attrs.functional) || false
       transformedSource = transformedSource.replace('__vue_template_functional__', JSON.stringify(functionalTemplate))
     }
 

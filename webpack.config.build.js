@@ -1,4 +1,3 @@
-const webpack = require('webpack')
 const path = require('path')
 const merge = require('webpack-merge')
 const CleanWebpackPlugin = require('clean-webpack-plugin')
@@ -23,7 +22,7 @@ module.exports = merge(webpackConfig, {
       new UglifyJsPlugin({
         sourceMap: false,
         uglifyOptions: {
-          compress: false, // building will be very slow if enable this.
+          compress: false, // build process will be very slow if enable this.
           mangle: false,
           output: {
             comments: false

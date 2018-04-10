@@ -1,3 +1,4 @@
+/* eslint-disable no-mixed-operators */
 
 // external tooling
 const valueParser = require('postcss-value-parser')

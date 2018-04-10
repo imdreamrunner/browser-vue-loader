@@ -1,4 +1,7 @@
-import { describe, it } from 'mocha'
+/* globals loadVue */
+/* eslint-disable no-unused-expressions */
+
+import { describe, it, before } from 'mocha'
 import { expect } from 'chai'
 import { loadLib } from './helpers'
 

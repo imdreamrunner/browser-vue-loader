@@ -62,7 +62,7 @@ export default class CssProcessor extends BaseProcessor {
     if (compiled.messages) {
       compiled.messages.forEach(message => {
         const {type, file} = message
-        console.log('msg', type, message)
+        console.log('msg', type, file, message)
       })
     }
 

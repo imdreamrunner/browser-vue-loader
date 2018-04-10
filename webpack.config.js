@@ -38,6 +38,12 @@ module.exports = {
         options: {
           compact: true
         }
+      },
+      // BABEL
+      {
+        test: /\.txt/,
+        loader: 'raw-loader',
+        exclude: /(node_modules)/,
       }
     ]
   },

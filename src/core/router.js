@@ -49,7 +49,8 @@ export default class Router {
     this.loader = loader
     this.processorMap = {}
     this.table = routingTable.map(rule => {
-      rule.processor = new rule.processor(loader)
+      const Processor = rule.processor
+      rule.processor = new Processor(loader)
       this.processorMap[rule.name] = rule.processor
       return rule
     })

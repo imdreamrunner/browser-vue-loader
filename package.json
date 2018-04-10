@@ -9,7 +9,7 @@
   "scripts": {
     "dev": "cross-env NODE_ENV=dev webpack-dev-server --progress --mode development --config webpack.config.dev.js",
     "build": "webpack -p --progress --mode production --config webpack.config.build.js",
-    "test": "karma start",
+    "test": "npm run build && karma start --single-run",
     "prepack": "npm run build",
     "lint": "standard --verbose --fix"
   },
@@ -18,11 +18,16 @@
     "url": "git@github.com:imdreamrunner/browser-vue-loader.git"
   },
   "standard": {
+    "parser": "babel-eslint",
+    "parserOptions": {
+      "allowImportExportEverywhere": true
+    },
     "ignore": [
       "dist/"
     ]
   },
   "dependencies": {
+    "babel-eslint": "^8.2.2",
     "babel-plugin-transform-amd-system-wrapper": "^0.3.7",
     "babel-plugin-transform-cjs-system-wrapper": "^0.6.2",
     "babel-plugin-transform-es2015-modules-systemjs": "latest",
@@ -37,7 +42,8 @@
     "sass.js": "^0.10.9",
     "sugarss": "^1.0.1",
     "uuid": "^3.2.1",
-    "vue-template-compiler": "^2.5.16"
+    "vue-template-compiler": "^2.5.16",
+    "whatwg-fetch": "^2.0.4"
   },
   "devDependencies": {
     "babel-core": "6.26.0",
