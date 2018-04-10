@@ -2,6 +2,7 @@ module.exports = (config) => {
   config.set({
 
     files: [
+      'node_modules/babel-polyfill/dist/polyfill.js',
       { pattern: 'dist/*.js', watched: true, served: true, included: false },
       { pattern: 'examples/**/*', watched: true, served: true, included: false },
       { pattern: 'tests/**/*-test.js', watched: true },

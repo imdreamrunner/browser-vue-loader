@@ -23,7 +23,10 @@ module.exports = {
   plugins: [
     new webpack.DefinePlugin({
       IS_DEV: IS_DEV
-    })
+    }),
+    new webpack.optimize.LimitChunkCountPlugin({
+      maxChunks: 1,
+    }),
   ],
   module: {
     rules: [
