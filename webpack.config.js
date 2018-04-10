@@ -43,7 +43,7 @@ module.exports = {
       {
         test: /\.txt/,
         loader: 'raw-loader',
-        exclude: /(node_modules)/,
+        exclude: /(node_modules)/
       }
     ]
   },
