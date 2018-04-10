@@ -3,6 +3,9 @@
 Browser Vue Loader
 ==================
 
+[![Build Status](https://img.shields.io/travis/imdreamrunner/browser-vue-loader/master.svg?style=flat-square)](https://travis-ci.org/imdreamrunner/browser-vue-loader)
+[![NPM Version](https://img.shields.io/npm/v/browser-vue-loader.svg?style=flat-square)](https://www.npmjs.com/package/browser-vue-loader)
+
 Browser Vue Loader is a single file JavaScript library
 that loads untranspile Vue applications into the browsers.
 
