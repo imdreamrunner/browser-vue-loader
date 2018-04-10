@@ -64,8 +64,8 @@ The `loadVue` methods supports both Vue single file components and ES modules.
 
 Examples:
 
-* [Load Vue SFC](https://imdreamrunner.github.io/browser-vue-loader/examples/single-file-component/)
-* [Load ES Module](https://imdreamrunner.github.io/browser-vue-loader/examples/es-modules/)
+* [➡️ Load Vue SFC](https://imdreamrunner.github.io/browser-vue-loader/examples/single-file-component/)
+* [➡️ Load ES Module](https://imdreamrunner.github.io/browser-vue-loader/examples/es-modules/)
 
 In `<script type="boom!">` or your source code, you can also use the import statement
 to load another module. The name of the loaded module must be a relative or full
@@ -80,10 +80,10 @@ The module system is based on the
 which describes the behavior of loading JavaScript modules from a
 JavaScript host environment.
 
+A more complete example of a Vue application is the TODO MVC, which
+contains of two components `App.vue` and `Todos.vue`.
 
-Example:
-
-* [TODO MVC](https://imdreamrunner.github.io/browser-vue-loader/examples/todo-mvc/)
+* [➡️ TODO MVC](https://imdreamrunner.github.io/browser-vue-loader/examples/todo-mvc/)
 
 
 ### Loads a CommonJS or AMD module from NPM registry
