@@ -3,7 +3,6 @@ import urlParse from 'url-parse'
 import { fetchFromUrl } from '../../core/fetch-source'
 import BaseProcessor from '../base-processor'
 
-
 const compileSass = (key, source) => {
   const parsedKey = urlParse(key)
   const {origin, pathname} = parsedKey
@@ -31,7 +30,7 @@ const compileSass = (key, source) => {
 }
 
 export class ScssProcessor extends BaseProcessor {
-  async process(key, source, options) {
+  async process (key, source, options) {
     try {
       const compiled = await compileSass(key, source)
       let compiledCss = compiled.text

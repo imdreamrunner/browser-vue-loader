@@ -8,40 +8,40 @@ const routingTable = [
   {
     name: 'js',
     matcher: /.*\.js/,
-    processor: EsModuleProcessor,
+    processor: EsModuleProcessor
   },
   {
     name: 'es',
-    processor: EsModuleProcessor,
+    processor: EsModuleProcessor
   },
   {
     name: 'amd',
-    processor: AmdModuleProcessor,
+    processor: AmdModuleProcessor
   },
   {
     name: 'commonjs',
-    processor: CommonJsModuleProcessor,
+    processor: CommonJsModuleProcessor
   },
   {
     name: 'vue-sfc',
     matcher: /.*\.vue/,
-    processor: VueSfcProcessor,
+    processor: VueSfcProcessor
   },
   {
     name: 'vue-template',
     matcher: /.*\.vue/,
-    processor: VueTemplateProcessor,
+    processor: VueTemplateProcessor
   },
   {
     name: 'css',
     matcher: /.*\.css/,
-    processor: CssProcessor,
+    processor: CssProcessor
   },
   {
     name: 'scss',
     matcher: /.*\.scss/,
-    processor: ScssProcessor,
-  },
+    processor: ScssProcessor
+  }
 ]
 
 export default class Router {
@@ -55,7 +55,7 @@ export default class Router {
     })
   }
 
-  async route(key, data, ...args) {
+  async route (key, data, ...args) {
     for (let rule of this.table) {
       if (rule.matcher && rule.matcher.test(key)) {
         return rule.processor.process(key, data, ...args)
@@ -64,7 +64,7 @@ export default class Router {
     throw new Error(`No processor to handle "${key}".`)
   }
 
-  async routeTo(name, key, data, ...args) {
+  async routeTo (name, key, data, ...args) {
     if (Object.keys(this.processorMap).indexOf(name) < 0) {
       throw new Error(`No processor named "${name}".`)
     }

@@ -13,7 +13,7 @@ const doProcessScriptTag = () => {
   document.removeEventListener('DOMContentLoaded', doProcessScriptTag, false)
 
   const scriptCollection = document.getElementsByTagName('script')
-  const scripts = Array.prototype.slice.call( scriptCollection, 0 )
+  const scripts = Array.prototype.slice.call(scriptCollection, 0)
   scripts.filter(s => s.type === 'boom!').forEach(async script => {
     const content = script.innerHTML
     const key = generateUniqueUrl(document.location.href, 'js')

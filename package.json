@@ -10,11 +10,17 @@
     "dev": "cross-env NODE_ENV=dev webpack-dev-server --progress --mode development --config webpack.config.dev.js",
     "build": "webpack -p --progress --mode production --config webpack.config.build.js",
     "test": "karma start",
-    "prepack": "npm run build"
+    "prepack": "npm run build",
+    "lint": "standard --verbose --fix"
   },
   "repository": {
     "type": "git",
     "url": "git@github.com:imdreamrunner/browser-vue-loader.git"
+  },
+  "standard": {
+    "ignore": [
+      "dist/"
+    ]
   },
   "dependencies": {
     "babel-plugin-transform-amd-system-wrapper": "^0.3.7",
@@ -50,6 +56,7 @@
     "karma-mocha": "^1.3.0",
     "mocha": "^5.0.5",
     "raw-loader": "^0.5.1",
+    "standard": "^11.0.1",
     "uglifyjs-webpack-plugin": "^1.2.4",
     "watchify": "^3.11.0",
     "webpack": "^4.5.0",

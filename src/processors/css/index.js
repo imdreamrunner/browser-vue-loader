@@ -32,14 +32,14 @@ const atImportPlugin = (processor) => {
   }
   return atImport({
     resolver,
-    instantiator,
+    instantiator
   })
 }
 
 export default class CssProcessor extends BaseProcessor {
   async process (key, source, options = {}) {
     const plugins = [
-      atImportPlugin(this),
+      atImportPlugin(this)
     ]
     if (options.scoped) {
       plugins.push(scopeId({id: options.moduleId}))
@@ -47,7 +47,7 @@ export default class CssProcessor extends BaseProcessor {
 
     const postcssOptions = {
       from: key,
-      to: key,
+      to: key
     }
 
     let compiled

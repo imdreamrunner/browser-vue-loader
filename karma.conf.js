@@ -5,7 +5,7 @@ module.exports = (config) => {
       'node_modules/babel-polyfill/dist/polyfill.js',
       { pattern: 'dist/*.js', watched: true, served: true, included: false },
       { pattern: 'examples/**/*', watched: true, served: true, included: false },
-      { pattern: 'tests/**/*-test.js', watched: true },
+      { pattern: 'tests/**/*-test.js', watched: true }
     ],
 
     reporters: ['spec'],
@@ -13,7 +13,7 @@ module.exports = (config) => {
     frameworks: ['browserify', 'mocha'],
 
     preprocessors: {
-      'tests/**/*-test.js': ['browserify'],
+      'tests/**/*-test.js': ['browserify']
     },
 
     browserify: {
@@ -21,7 +21,7 @@ module.exports = (config) => {
       transform: [
         ['babelify', {
           ignore: /node_modules/
-        }],
+        }]
       ],
       extensions: ['.jsx']
     },
@@ -30,8 +30,8 @@ module.exports = (config) => {
       options: {
         sourceMap: 'inline'
       },
-      sourceFileName: function(file) {
-        return file.originalPath;
+      sourceFileName: function (file) {
+        return file.originalPath
       }
     },
 
@@ -39,9 +39,9 @@ module.exports = (config) => {
       require('karma-mocha'),
       require('karma-browserify'),
       require('karma-chrome-launcher'),
-      require('karma-spec-reporter'),
+      require('karma-spec-reporter')
     ],
 
-    browsers: ['Chrome'],
+    browsers: ['Chrome']
   })
 }

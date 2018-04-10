@@ -4,10 +4,8 @@ import * as componentNormalizer from './component-normalizer'
 import BaseProcessor from '../base-processor'
 import componentTemplate from 'raw-loader!./component-template.txt'
 
-
 export default class VueProcessor extends BaseProcessor {
-
-  async process(key, source) {
+  async process (key, source) {
     let transformedSource = componentTemplate
 
     const parts = parseComponent(source)

@@ -11,7 +11,7 @@ module.exports = merge(webpackConfig, {
 
   output: {
     path: path.join(__dirname, 'dist'),
-    filename: '[name].js',
+    filename: '[name].js'
   },
 
   plugins: [
@@ -23,14 +23,14 @@ module.exports = merge(webpackConfig, {
       new UglifyJsPlugin({
         sourceMap: false,
         uglifyOptions: {
-          compress: false,  // building will be very slow if enable this.
+          compress: false, // building will be very slow if enable this.
           mangle: false,
           output: {
-            comments: false,
-          },
-        },
-      }),
-    ],
-  },
+            comments: false
+          }
+        }
+      })
+    ]
+  }
 
 })

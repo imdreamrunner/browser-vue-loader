@@ -1,5 +1,4 @@
 import RegisterLoader from 'es-module-loader/core/register-loader'
-import { ModuleNamespace } from 'es-module-loader/core/loader-polyfill'
 import { fetchContent } from './fetch-source'
 import { splitKey, constructKey, lookupNpmPackage, addDefaultExtension } from './key-utils'
 import Router from './router'

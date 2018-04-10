@@ -4,7 +4,7 @@ import babelPluginSyntaxDynamicImport from 'babel-plugin-syntax-dynamic-import'
 import babelPluginTransformAmdSystemWrapper from 'babel-plugin-transform-amd-system-wrapper'
 import babelPluginTransformCjsSystemWrapper from 'babel-plugin-transform-cjs-system-wrapper'
 
-export function transpile(key, source, options) {
+export function transpile (key, source, options) {
   const module = (options || {}).module || 'es'
 
   let plugins = [babelPluginSyntaxDynamicImport, babelPluginTransformES2015ModulesSystemJS]
@@ -25,7 +25,7 @@ export function transpile(key, source, options) {
     babelrc: false,
     // presets: ['es2015'],
     parserOpts: { strictMode: false },
-    plugins: plugins,
+    plugins: plugins
   })
 
   // delete the "use strict";

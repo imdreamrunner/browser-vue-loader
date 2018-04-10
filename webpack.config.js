@@ -25,8 +25,8 @@ module.exports = {
       IS_DEV: IS_DEV
     }),
     new webpack.optimize.LimitChunkCountPlugin({
-      maxChunks: 1,
-    }),
+      maxChunks: 1
+    })
   ],
   module: {
     rules: [
@@ -39,11 +39,11 @@ module.exports = {
           compact: true
         }
       }
-    ],
+    ]
   },
   node: {
     fs: 'empty',
     module: 'empty',
-    net: 'empty',
+    net: 'empty'
   }
 }

@@ -1,4 +1,4 @@
-const defaultExtension = "js"
+const defaultExtension = 'js'
 
 export const addDefaultExtension = url => {
   const pathSplits = url.split('/')

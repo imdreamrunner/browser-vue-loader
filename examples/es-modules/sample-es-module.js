@@ -1,14 +1,14 @@
-import another from './another-module.js';
-import _ from 'lodash';
+import another from './another-module.js'
+import _ from 'lodash'
 
-export function currentModuleFunction() {
-  return 1;
+export function currentModuleFunction () {
+  return 1
 }
 
-export function loadedFromOtherModule() {
-  return another;
+export function loadedFromOtherModule () {
+  return another
 }
 
-export function importFromLodash() {
-  return _.partition([1, 2, 3, 4], n => n % 2);
+export function importFromLodash () {
+  return _.partition([1, 2, 3, 4], n => n % 2)
 }

@@ -62,23 +62,23 @@ const scopeIdPlugin = postcss.plugin('add-id', ({ id }) => root => {
       // individual animation-name declaration
       if (/-?animation-name$/.test(decl.prop)) {
         decl.value = decl.value.split(',')
-        .map(v => keyframes[v.trim()] || v.trim())
-        .join(',')
+          .map(v => keyframes[v.trim()] || v.trim())
+          .join(',')
       }
       // shorthand
       if (/-?animation$/.test(decl.prop)) {
         decl.value = decl.value.split(',')
-        .map(v => {
-          const vals = v.trim().split(/\s+/)
-          const i = vals.findIndex(val => keyframes[val])
-          if (i !== -1) {
-            vals.splice(i, 1, keyframes[vals[i]])
-            return vals.join(' ')
-          } else {
-            return v
-          }
-        })
-        .join(',')
+          .map(v => {
+            const vals = v.trim().split(/\s+/)
+            const i = vals.findIndex(val => keyframes[val])
+            if (i !== -1) {
+              vals.splice(i, 1, keyframes[vals[i]])
+              return vals.join(' ')
+            } else {
+              return v
+            }
+          })
+          .join(',')
       }
     })
   }
