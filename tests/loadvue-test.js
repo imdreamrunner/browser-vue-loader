@@ -25,5 +25,5 @@ describe('Loading the browser-vue-loader.js', () => {
 
     expect(module.importFromLodash).to.be.a('function')
     expect(module.importFromLodash()).to.deep.equal([[1, 3], [2, 4]])
-  }).timeout(5000)
+  }).timeout(20000)
 })
