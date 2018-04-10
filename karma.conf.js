@@ -8,6 +8,8 @@ module.exports = (config) => {
       { pattern: 'tests/**/*-test.js', watched: true },
     ],
 
+    reporters: ['spec'],
+
     frameworks: ['browserify', 'mocha'],
 
     preprocessors: {
@@ -37,6 +39,7 @@ module.exports = (config) => {
       require('karma-mocha'),
       require('karma-browserify'),
       require('karma-chrome-launcher'),
+      require('karma-spec-reporter'),
     ],
 
     browsers: ['Chrome'],
