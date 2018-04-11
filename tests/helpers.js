@@ -6,3 +6,5 @@ export const loadLib = (timeout = null) => {
     document.head.appendChild(script)
   })
 }
+
+export const wait = ms => new Promise(resolve => setTimeout(resolve, ms))

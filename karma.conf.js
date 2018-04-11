@@ -2,6 +2,7 @@ module.exports = (config) => {
   const customConfig = {
     files: [
       'node_modules/babel-polyfill/dist/polyfill.js',
+      'node_modules/jquery/dist/jquery.js',
       { pattern: 'dist/*.js', watched: true, served: true, included: false },
       { pattern: 'examples/**/*', watched: true, served: true, included: false },
       { pattern: 'tests/**/*-test.js', watched: true }
@@ -9,10 +10,10 @@ module.exports = (config) => {
 
     reporters: ['spec'],
 
-    frameworks: ['browserify', 'mocha'],
+    frameworks: ['browserify', 'mocha', 'iframes'],
 
     preprocessors: {
-      'tests/**/*-test.js': ['browserify']
+      'tests/**/*-test.js': ['browserify', 'iframes']
     },
 
     browserify: {
@@ -45,7 +46,8 @@ module.exports = (config) => {
       require('karma-mocha'),
       require('karma-browserify'),
       require('karma-chrome-launcher'),
-      require('karma-spec-reporter')
+      require('karma-spec-reporter'),
+      require('karma-iframes'),
     ],
 
     browsers: ['Chrome']
