@@ -47,7 +47,7 @@ module.exports = (config) => {
       require('karma-browserify'),
       require('karma-chrome-launcher'),
       require('karma-spec-reporter'),
-      require('karma-iframes'),
+      require('karma-iframes')
     ],
 
     browsers: ['Chrome']

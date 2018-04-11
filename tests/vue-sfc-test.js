@@ -1,4 +1,5 @@
 /* globals loadVue */
+/* globals $ */
 /* eslint-disable no-unused-expressions */
 
 import { describe, it, before } from 'mocha'
@@ -20,7 +21,7 @@ describe('Loading Vue Single File Component', () => {
     while (!$('.app').html()) {
       await wait(1000)
     }
-    const backgroundColor = $('.app h1').css("color")
+    const backgroundColor = $('.app h1').css('color')
     expect(backgroundColor).to.equal('rgb(255, 0, 0)')
   }).timeout(20000)
 })
