@@ -15,15 +15,15 @@
   }
 </script>
 
-
+<!--
 <style>
   @import "sample-css.css";
   h1 {
     background: purple;
   }
 </style>
+-->
 
-<!--
 <style scoped lang="scss">
   $primary-color: yellow;
   .app {
@@ -37,4 +37,3 @@
     color: $h2-color;
   }
 </style>
--->
