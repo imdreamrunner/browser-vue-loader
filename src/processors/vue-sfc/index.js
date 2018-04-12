@@ -1,66 +1,90 @@
 import { parseComponent } from 'vue-template-compiler'
 import md5 from 'md5'
-import * as componentNormalizer from './component-normalizer'
+import componentNormalizer from './component-normalizer'
 import BaseProcessor from '../base-processor'
-import componentTemplate from './component-template.txt'
+import { addToCache } from '../../core/fetch-source'
+import { constructKey, splitKey } from '../../core/key-utils'
+
+const supportedStyles = ['css', 'scss']
 
 export default class VueProcessor extends BaseProcessor {
   async process (key, source) {
-    let transformedSource = componentTemplate
+    const {url} = splitKey(key)
+
+    const dependencies = []
 
     const parts = parseComponent(source)
-    console.log('parts', parts)
-
-    // register component-normalizer if it's not inside the registry.
-    if (!this.getModuleByKey('component-normalizer')) {
-      this.registerModuleNamespace('component-normalizer', componentNormalizer)
-    }
 
     // <script>
-    const script = parts.script.content
-    const scriptKey = key + '#script'
-    await this.sendToRouter('js', scriptKey, script)
-    transformedSource = transformedSource.replace('__vue_script__', scriptKey)
+    const scriptContent = parts.script.content
+    const scriptUrl = url + '#script'
+    addToCache(scriptUrl, scriptContent)
+
+    const scriptKey = constructKey({processor: 'es', url: scriptUrl})
+    dependencies.push(scriptKey)
 
     // <template>
+    let templateKey = null
+    let functionalTemplate = false
     if (parts.template) {
-      const templateKey = key + '#template'
-      await this.sendToRouter('vue-template', templateKey, parts.template.content)
-      transformedSource = transformedSource.replace('__vue_template__', templateKey)
+      const templateContent = parts.template.content
+      const templateUrl = url + '#template'
+      addToCache(templateUrl, templateContent)
 
-      const functionalTemplate = (parts.template.attrs && parts.template.attrs.functional) || false
-      transformedSource = transformedSource.replace('__vue_template_functional__', JSON.stringify(functionalTemplate))
+      templateKey = constructKey({processor: 'vue-template', url: templateUrl})
+      dependencies.push(templateKey)
+      functionalTemplate = (parts.template.attrs && parts.template.attrs.functional) || false
     }
 
     // <style>
-    const moduleId = 'data-v-' + md5(key)
-    transformedSource = transformedSource.replace('__vue_scopeId__', moduleId)
-
-    const styleImportStatements = []
-    const styleExecuteStatements = []
-    let counter = 0
+    const scopeId = 'data-v-' + md5(key)
+    const styleKeyList = []
+    let hasScopedStyle = false
     for (let style of parts.styles) {
-      const styleKey = key + '#style-' + md5(style.content)
-      const styleVariable = 'style' + counter
-      const scoped = style.scoped
-      const styleOptions = {
-        moduleId,
-        scoped
+      if (!style.content) {
+        continue
       }
+
+      const styleUrl = key + '#style-' + md5(style.content)
+      addToCache(styleUrl, style.content)
+
+      const scoped = style.scoped
+      if (scoped) hasScopedStyle = true
+      const styleOptions = {scopeId, scoped}
       const lang = style.lang || 'css'
-      await this.sendToRouter(lang, styleKey, style.content, styleOptions)
-      styleImportStatements.push(`import ${styleVariable} from "${styleKey}"`)
-      styleExecuteStatements.push(`${styleVariable}.injectStyle();`)
-      counter += 1
+      if (supportedStyles.indexOf(lang) < 0) {
+        throw new Error(`Style "${lang}" is not supported.`)
+      }
+      const styleKey = constructKey({processor: lang, url: styleUrl, options: styleOptions})
+      dependencies.push(styleKey)
+      styleKeyList.push(styleKey)
     }
-    const styleExecuteFunction = `function () {
-      ${styleExecuteStatements.join('\n')}
-    }`
-    transformedSource = transformedSource.replace('__vue_style_imports___', styleImportStatements.join('\n'))
-    transformedSource = transformedSource.replace('__vue_styles__', styleExecuteFunction)
 
-    await this.sendToRouter('js', key, transformedSource)
+    this.registerDynamic(key, dependencies, true, (require, exports, module) => {
+      const script = require(scriptKey)
+      let render, staticRenderFns
+      if (templateKey) {
+        const template = require(templateKey)
+        render = template.render
+        staticRenderFns = template.staticRenderFns
+      }
 
-    console.log('done sfc')
+      const loadStyleFunction = () => {
+        styleKeyList.forEach(style => {
+          require(style).injectStyle()
+        })
+      }
+
+      const Component = componentNormalizer(
+        script,
+        render,
+        staticRenderFns,
+        functionalTemplate,
+        loadStyleFunction,
+        hasScopedStyle ? scopeId : null
+      )
+
+      module.exports = Component.exports
+    })
   }
 }

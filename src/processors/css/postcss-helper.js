@@ -53,8 +53,9 @@ export const postcssProcess = async (url, source, options, require) => {
     atImportPlugin(require)
   ]
 
+  console.log('options', options)
   if (options.scoped) {
-    plugins.push(scopeId({id: options.moduleId}))
+    plugins.push(scopeId({id: options.scopeId}))
   }
 
   const postcssOptions = {from: url, to: url}

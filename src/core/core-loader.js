@@ -18,7 +18,7 @@ class BrowserVueLoader extends RegisterLoader {
    *
    */
   async [RegisterLoader.resolve] (key, parentKey) {
-    let {processor, url} = splitKey(key)
+    let {processor, url, options} = splitKey(key)
     let {url: parentUrl} = splitKey(parentKey)
     let relativeResolved = super[RegisterLoader.resolve](url, parentUrl)
     if (relativeResolved) {
@@ -33,7 +33,7 @@ class BrowserVueLoader extends RegisterLoader {
       }
     }
     url = addDefaultExtension(url)
-    return constructKey({processor, url})
+    return constructKey({processor, url, options})
   }
 
   /*

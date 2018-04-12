@@ -21,6 +21,15 @@ export const lookupNpmPackage = async name => {
   return null
 }
 
+/**
+ * Encode the URL and ! character.
+ * @param {String} str URL
+ * @returns {String} encoded URL
+ */
+const encodeURIComponentFix = (str) => {
+  return encodeURIComponent(str).replace(/!/g, '%21')
+}
+
 export const splitKey = key => {
   let processor, url, options
   if (!key) return {processor, url, options}
@@ -35,7 +44,7 @@ export const splitKey = key => {
       processor = processorOptions
     } else {
       processor = processorOptions.substring(0, questionMarkPosition)
-      options = JSON.stringify(processorOptions.substring(questionMarkPosition + 1))
+      options = JSON.parse(decodeURIComponent(processorOptions.substring(questionMarkPosition + 1)))
     }
   }
   return { processor, url, options }
@@ -46,7 +55,7 @@ export const constructKey = ({ processor, options, url }) => {
   if (processor) {
     result += processor
     if (options) {
-      result += `?${JSON.stringify(options)}`
+      result += `?${encodeURIComponentFix(JSON.stringify(options))}`
     }
     result += '!'
   }

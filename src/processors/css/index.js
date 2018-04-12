@@ -4,8 +4,8 @@ import { splitKey } from '../../core/key-utils'
 import injectStyle from './inject-style'
 
 export default class CssProcessor extends BaseProcessor {
-  async process (key, source, options = {}) {
-    const { url } = splitKey(key)
+  async process (key, source) {
+    const { url, options = {} } = splitKey(key)
     const imports = await getImports(url, source)
 
     this.registerDynamic(key, imports, true, (require, exports, module) => {

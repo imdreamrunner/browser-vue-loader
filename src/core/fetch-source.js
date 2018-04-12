@@ -1,12 +1,18 @@
 import 'whatwg-fetch'
 
+const localCache = {}
+
+export const addToCache = (url, content) => {
+  localCache[url] = content
+}
+
 /**
  * This is essentially the WHATWG fetch function.
  * @param url {String} the URL to fetch
  * @returns {Promise<object>}
  */
 export const fetchFromUrl = async (url) => {
-  console.log('fetch url', url)
+  console.log('fetch', url)
   return window.fetch(url)
 }
 
@@ -16,6 +22,10 @@ export const fetchFromUrl = async (url) => {
  * @returns {Promise<String>}
  */
 export const fetchContent = async (url) => {
-  const response = await fetchFromUrl(url)
-  return response.text()
+  if (localCache[url]) {
+    return localCache[url]
+  } else {
+    const response = await fetchFromUrl(url)
+    return response.text()
+  }
 }
