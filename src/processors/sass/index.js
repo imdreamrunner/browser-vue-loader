@@ -1,7 +1,8 @@
 import sass from 'sass.js'
 import urlParse from 'url-parse'
-import { fetchFromUrl } from '../../core/fetch-source'
+import { addToCache, fetchFromUrl } from '../../core/fetch-source'
 import BaseProcessor from '../base-processor'
+import { constructKey, splitKey } from '../../core/key-utils'
 
 const compileSass = (key, source) => {
   const parsedKey = urlParse(key)
@@ -14,6 +15,7 @@ const compileSass = (key, source) => {
     const possiblePaths = sass.getPathVariations(request.resolved)
     for (let path of possiblePaths) {
       const response = await fetchFromUrl(origin + path)
+      // TODO: Remove the usage of fetch here by loading SCSS from model.
       if (response.status === 200) {
         const content = await response.text()
         done({content})
@@ -31,17 +33,17 @@ const compileSass = (key, source) => {
 
 export class ScssProcessor extends BaseProcessor {
   async process (key, source, options) {
-    try {
-      const compiled = await compileSass(key, source)
-      let compiledCss = compiled.text
-      if (!compiledCss) {
-        console.warn('Sass compile error', compiled)
-        compiledCss = ''
-      }
-      await this.sendToRouter('css', key, compiledCss, options)
-    } catch (ex) {
-      console.log('ex', ex)
-      await this.sendToRouter('css', key, '', options)
-    }
+    const {url} = splitKey(key)
+    const cssUrl = url + "#css"
+    const compiled = await compileSass(key, source)
+    addToCache(cssUrl, compiled.text)
+    const cssKey = constructKey({processor: 'css', url: cssUrl})
+
+    this.registerDynamic(key, [cssKey], true, (require, exports, module) => {
+      exports.raw = source
+      const cssModule = require(cssKey)
+      exports.getCompiledCss = () => cssModule.getCompiledCss()
+      exports.injectStyle = () => cssModule.injectStyle()
+    })
   }
 }
