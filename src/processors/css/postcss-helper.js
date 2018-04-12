@@ -1,4 +1,5 @@
 import postcss from 'postcss'
+import postcssModules from './postcss-plugins/postcss-modules'
 import atImport from './postcss-plugins/at-import'
 import scopeId from './postcss-plugins/scope-id'
 
@@ -50,7 +51,13 @@ export const getImports = async (url, source) => {
 
 export const postcssProcess = async (url, source, options, require) => {
   const plugins = [
-    atImportPlugin(require)
+    atImportPlugin(require),
+    postcssModules({
+      scopeBehaviour: 'local',
+      getJSON: function(cssFileName, json, outputFileName) {
+        console.log('got Json', cssFileName, json, outputFileName)
+      }
+    })
   ]
 
   if (options.scoped) {

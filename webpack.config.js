@@ -39,7 +39,7 @@ module.exports = {
           compact: true
         }
       },
-      // BABEL
+      // Raw
       {
         test: /\.txt/,
         loader: 'raw-loader',
@@ -50,6 +50,7 @@ module.exports = {
   node: {
     fs: 'empty',
     module: 'empty',
-    net: 'empty'
+    net: 'empty',
+    'css-modules-loader-core': 'empty'
   }
 }

@@ -40,6 +40,7 @@ export default class VueProcessor extends BaseProcessor {
     const scopeId = 'data-v-' + md5(key)
     const styleKeyList = []
     let hasScopedStyle = false
+    const cssModules = {}
     for (let style of parts.styles) {
       if (!style.content) {
         continue
@@ -58,6 +59,9 @@ export default class VueProcessor extends BaseProcessor {
       const styleKey = constructKey({processor: lang, url: styleUrl, options: styleOptions})
       dependencies.push(styleKey)
       styleKeyList.push(styleKey)
+
+      const moduleName = '$style'
+      cssModules[moduleName] = 'aaa'
     }
 
     this.registerDynamic(key, dependencies, true, (require, exports, module) => {
@@ -69,7 +73,10 @@ export default class VueProcessor extends BaseProcessor {
         staticRenderFns = template.staticRenderFns
       }
 
-      const loadStyleFunction = () => {
+      function loadStyleFunction() {
+        Object.keys(cssModules).forEach(moduleName => {
+          this[moduleName] = cssModules[moduleName]
+        })
         styleKeyList.forEach(style => {
           require(style).injectStyle()
         })
@@ -82,9 +89,9 @@ export default class VueProcessor extends BaseProcessor {
         functionalTemplate,
         loadStyleFunction,
         hasScopedStyle ? scopeId : null
-      )
+      ).exports
 
-      module.exports = Component.exports
+      module.exports = Component
     })
   }
 }

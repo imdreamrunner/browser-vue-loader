@@ -13,16 +13,7 @@ export default class BaseProcessor {
     this._loader = loader
   }
 
-  /**
-   * Retrieve a module from the registry by its key.
-   * This method is usually used by the subclasses.
-   * @param {string} key the key of the module.
-   */
-  getModuleByKey = (key) => this._loader.registry.get(key)
-
-  loadModuleByKey = async (key, parentKey) => this._loader.import(key, parentKey)
-
-  sendToRouter = async (name, key, source, ...extra) => this._loader.router.routeTo(name, key, source, ...extra)
+  importModule = async (key, parentKey) => this._loader.import(key, parentKey)
 
   register = (...args) => this._loader.register(...args)
 
