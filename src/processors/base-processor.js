@@ -24,11 +24,15 @@ export default class BaseProcessor {
 
   sendToRouter = async (name, key, source, ...extra) => this._loader.router.routeTo(name, key, source, ...extra)
 
+  register = (...args) => this._loader.register(...args)
+
+  registerDynamic = (...args) => this._loader.registerDynamic(...args)
+
   registerModuleNamespace = (key, module) => this._loader.registry.set(key, new ModuleNamespace(module))
 
   registerEsSourceCode (key, source) {
-    const register = (...args) => this._loader.register(key, ...args)
-    const registerDynamic = (...args) => this._loader.registerDynamic(key, ...args)
+    const register = (...args) => this.register(key, ...args)
+    const registerDynamic = (...args) => this.registerDynamic(key, ...args)
     function evalFunction () {
       /* eslint-disable no-unused-vars */
       /* eslint-disable no-eval */

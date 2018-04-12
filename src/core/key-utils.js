@@ -22,22 +22,33 @@ export const lookupNpmPackage = async name => {
 }
 
 export const splitKey = key => {
-  if (!key) return {processor: undefined, url: undefined}
-  const splits = key.split('!')
-  let processor, url
-  if (splits.length > 1) {
-    processor = splits[0]
-    url = splits[1]
+  let processor, url, options
+  if (!key) return {processor, url, options}
+  const exclamationMarkPosition = key.indexOf('!')
+  if (exclamationMarkPosition < 0) {
+    url = key
   } else {
-    url = splits[0]
+    url = key.substring(exclamationMarkPosition + 1)
+    const processorOptions = key.substring(0, exclamationMarkPosition)
+    const questionMarkPosition = processorOptions.indexOf('?')
+    if (questionMarkPosition < 0) {
+      processor = processorOptions
+    } else {
+      processor = processorOptions.substring(0, questionMarkPosition)
+      options = JSON.stringify(processorOptions.substring(questionMarkPosition + 1))
+    }
   }
-  return { processor, url }
+  return { processor, url, options }
 }
 
-export const constructKey = ({ processor, url }) => {
+export const constructKey = ({ processor, options, url }) => {
   let result = ''
   if (processor) {
-    result = processor + '!'
+    result += processor
+    if (options) {
+      result += `?${JSON.stringify(options)}`
+    }
+    result += '!'
   }
   return result + url
 }

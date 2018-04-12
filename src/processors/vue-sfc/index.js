@@ -49,8 +49,8 @@ export default class VueProcessor extends BaseProcessor {
       }
       const lang = style.lang || 'css'
       await this.sendToRouter(lang, styleKey, style.content, styleOptions)
-      styleImportStatements.push(`import { injectStyle as ${styleVariable} } from "${styleKey}"`)
-      styleExecuteStatements.push(`${styleVariable}()`)
+      styleImportStatements.push(`import ${styleVariable} from "${styleKey}"`)
+      styleExecuteStatements.push(`${styleVariable}.injectStyle();`)
       counter += 1
     }
     const styleExecuteFunction = `function () {
