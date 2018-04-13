@@ -5,7 +5,7 @@ const defaultExtension = 'js'
 export const addDefaultExtension = url => {
   const pathSplits = url.split('/')
   const filename = pathSplits[pathSplits.length - 1]
-  if (url.indexOf('http') >= 0 && filename.indexOf('.') < 0) {
+  if (url.indexOf('http') >= 0 && filename.indexOf('.') < 0 && url.indexOf('unpkg') < 0) {
     url = url + '.' + defaultExtension
   }
   return url
@@ -17,7 +17,7 @@ export const lookupNpmPackage = async name => {
   if (npmBlacklist.indexOf(name) >= 0) return null
   const unpkgUrl = `https://unpkg.com/${name}`
   const response = await fetchFromUrl(unpkgUrl)
-  if (response.url) return response.url
+  if (response.url) return unpkgUrl
   return null
 }
 
