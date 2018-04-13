@@ -61,7 +61,7 @@ export default class VueProcessor extends BaseProcessor {
       styleKeyList.push(styleKey)
 
       const moduleName = '$style'
-      cssModules[moduleName] = 'aaa'
+      cssModules[styleKey] = moduleName
     }
 
     this.registerDynamic(key, dependencies, true, (require, exports, module) => {
@@ -74,11 +74,10 @@ export default class VueProcessor extends BaseProcessor {
       }
 
       function loadStyleFunction () {
-        Object.keys(cssModules).forEach(moduleName => {
-          this[moduleName] = cssModules[moduleName]
-        })
-        styleKeyList.forEach(style => {
-          require(style).injectStyle()
+        styleKeyList.forEach(styleKey => {
+          const requiredStyle = require(styleKey)
+          requiredStyle.injectStyle()
+          this[cssModules[styleKey]] = requiredStyle.classNameMapping
         })
       }
 
