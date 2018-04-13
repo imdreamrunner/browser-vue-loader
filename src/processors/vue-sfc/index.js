@@ -51,7 +51,7 @@ export default class VueProcessor extends BaseProcessor {
 
       const scoped = style.scoped
       if (scoped) hasScopedStyle = true
-      const styleOptions = {scopeId, scoped}
+      const styleOptions = {scopeId, scoped, module: style.module}
       const lang = style.lang || 'css'
       if (supportedStyles.indexOf(lang) < 0) {
         throw new Error(`Style "${lang}" is not supported.`)
@@ -73,7 +73,7 @@ export default class VueProcessor extends BaseProcessor {
         staticRenderFns = template.staticRenderFns
       }
 
-      function loadStyleFunction() {
+      function loadStyleFunction () {
         Object.keys(cssModules).forEach(moduleName => {
           this[moduleName] = cssModules[moduleName]
         })

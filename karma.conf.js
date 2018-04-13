@@ -53,7 +53,7 @@ module.exports = (config) => {
     browsers: ['Chrome']
   }
 
-  if (process.env.TRAVIS) {
+  if (process.env.TRAVIS || process.env.HEDLESS) {
     customConfig.browsers = ['ChromeHeadlessNoSandbox']
   }
 

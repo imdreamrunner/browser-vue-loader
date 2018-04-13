@@ -16,7 +16,7 @@
   }
 </script>
 
-<style>
+<style module>
   @import "sample-css.css";
   h1 {
     background: purple;

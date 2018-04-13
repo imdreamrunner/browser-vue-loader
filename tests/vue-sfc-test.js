@@ -18,12 +18,16 @@ describe('Loading Vue Single File Component', () => {
     new Vue({
       render: h => h(App)
     }).$mount('#app')
-    while (!$('.app').html()) {
-      await wait(1000)
+
+    // Wait for Vue app to load.
+    for (let i = 0; i < 10; i++) {
+      if ($('.app h1').css('color') !== 'rgb(255, 0, 0)') {
+        await wait(1000)
+      }
     }
-    // TODO should not use wait.
-    await wait(1000)
+
     const backgroundColor = $('.app h1').css('color')
     expect(backgroundColor).to.equal('rgb(255, 0, 0)')
+
   }).timeout(20000)
 })

@@ -34,7 +34,7 @@ const compileSass = (key, source) => {
 export class ScssProcessor extends BaseProcessor {
   async process (key, source, options) {
     const {url} = splitKey(key)
-    const cssUrl = url + "#css"
+    const cssUrl = url + '#css'
     const compiled = await compileSass(key, source)
     addToCache(cssUrl, compiled.text)
     const cssKey = constructKey({processor: 'css', url: cssUrl})

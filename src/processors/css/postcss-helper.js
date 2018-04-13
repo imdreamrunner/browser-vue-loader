@@ -51,17 +51,22 @@ export const getImports = async (url, source) => {
 
 export const postcssProcess = async (url, source, options, require) => {
   const plugins = [
-    atImportPlugin(require),
-    postcssModules({
-      scopeBehaviour: 'local',
-      getJSON: function(cssFileName, json, outputFileName) {
-        console.log('got Json', cssFileName, json, outputFileName)
-      }
-    })
+    atImportPlugin(require)
   ]
 
   if (options.scoped) {
     plugins.push(scopeId({id: options.scopeId}))
+  }
+
+  if (options.module) {
+    plugins.push(
+      postcssModules({
+        scopeBehaviour: 'local',
+        getJSON: function (cssFileName, json, outputFileName) {
+          console.log('got Json', cssFileName, json, outputFileName)
+        }
+      })
+    )
   }
 
   const postcssOptions = {from: url, to: url}
