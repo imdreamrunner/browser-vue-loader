@@ -10,10 +10,10 @@ module.exports = (config) => {
 
     reporters: ['spec'],
 
-    frameworks: ['browserify', 'mocha', 'iframes'],
+    frameworks: ['browserify', 'mocha'],
 
     preprocessors: {
-      'tests/**/*-test.js': ['browserify', 'iframes']
+      'tests/**/*-test.js': ['browserify']
     },
 
     browserify: {
@@ -46,8 +46,7 @@ module.exports = (config) => {
       require('karma-mocha'),
       require('karma-browserify'),
       require('karma-chrome-launcher'),
-      require('karma-spec-reporter'),
-      require('karma-iframes')
+      require('karma-spec-reporter')
     ],
 
     browsers: ['Chrome']
