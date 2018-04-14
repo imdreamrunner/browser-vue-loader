@@ -62,7 +62,7 @@ module.exports = postcss.plugin(PLUGIN_NAME, (opts = {}) => {
     const dummyPathFetcher = () => {
       throw new Error('Path fetcher is called. @import should have been flattened.')
       // The path fetcher should not be called here because the browser vue loader
-      // should have already flatten the @import statement by at-import plugin.
+      // should have already flatten the @import statement by css-at-import plugin.
     }
 
     const parser = new Parser(dummyPathFetcher)

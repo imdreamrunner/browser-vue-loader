@@ -1,6 +1,6 @@
 import {EsModuleProcessor, AmdModuleProcessor, CommonJsModuleProcessor} from '../processors/js'
 import CssProcessor from '../processors/css'
-import {ScssProcessor} from '../processors/sass'
+import {SassProcessor, ScssProcessor} from '../processors/sass'
 import VueSfcProcessor from '../processors/vue-sfc'
 import VueTemplateProcessor from '../processors/vue-template'
 import ImageProcessor from '../processors/image'
@@ -37,6 +37,11 @@ const routingTable = [
     name: 'css',
     matcher: /\.css$/,
     processor: CssProcessor
+  },
+  {
+    name: 'sass',
+    matcher: /\.sass$/,
+    processor: SassProcessor
   },
   {
     name: 'scss',

@@ -4,11 +4,13 @@ import { addToCache, fetchFromUrl, fetchContent } from '../../core/fetch-source'
 import BaseProcessor from '../base-processor'
 import { constructKey, splitKey } from '../../core/key-utils'
 
-const compileSass = (key, source) => {
+const compileSass = (key, source, indentedSyntax = false) => {
   const parsedKey = urlParse(key)
   const {origin, pathname} = parsedKey
 
   const options = {}
+
+  options.indentedSyntax = indentedSyntax
   options.inputPath = pathname
 
   sass.importer(async (request, done) => {
@@ -32,11 +34,11 @@ const compileSass = (key, source) => {
   })
 }
 
-export class ScssProcessor extends BaseProcessor {
-  async process (key, source, options) {
+export class SassBaseProcessor extends BaseProcessor {
+  async process (key, source, indentedSyntax = false) {
     const {url} = splitKey(key)
     const cssUrl = url + '#css'
-    const compiled = await compileSass(key, source)
+    const compiled = await compileSass(key, source, indentedSyntax)
     addToCache(cssUrl, compiled.text)
     const cssKey = constructKey({processor: 'css', url: cssUrl})
 
@@ -45,5 +47,17 @@ export class ScssProcessor extends BaseProcessor {
       cssModule.raw = source
       module.exports = cssModule
     })
+  }
+}
+
+export class ScssProcessor extends SassBaseProcessor {
+  async process (key, source) {
+    await super.process(key, source, false)
+  }
+}
+
+export class SassProcessor extends SassBaseProcessor {
+  async process (key, source) {
+    await super.process(key, source, true)
   }
 }

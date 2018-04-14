@@ -5,7 +5,7 @@ import BaseProcessor from '../base-processor'
 import { addToCache } from '../../core/fetch-source'
 import { constructKey, splitKey } from '../../core/key-utils'
 
-const supportedStyles = ['css', 'scss']
+const supportedStyles = ['css', 'scss', 'sass']
 
 export default class VueProcessor extends BaseProcessor {
   async process (key, source) {
@@ -54,11 +54,11 @@ export default class VueProcessor extends BaseProcessor {
 
       const scoped = style.scoped
       if (scoped) hasScopedStyle = true
-      const styleOptions = {scopeId, scoped, module: style.module}
       const lang = style.lang || 'css'
       if (supportedStyles.indexOf(lang) < 0) {
         throw new Error(`Style "${lang}" is not supported.`)
       }
+      const styleOptions = {scopeId, scoped, module: style.module}
       const styleKey = constructKey({processor: lang, url: styleUrl, options: styleOptions})
       dependencies.push(styleKey)
       styleKeyList.push(styleKey)
