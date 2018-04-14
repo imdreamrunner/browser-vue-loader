@@ -49,7 +49,6 @@ class BrowserVueLoader extends RegisterLoader {
    * Instantiate hook
    */
   async [RegisterLoader.instantiate] (key) {
-    console.log('instantiate', key)
     const {processor, url, options} = splitKey(key)
     const source = await fetchContent(url, Boolean(options.binary))
     if (processor) {

@@ -14,7 +14,6 @@ const compileSass = (key, source, indentedSyntax = false) => {
   options.inputPath = pathname
 
   sass.importer(async (request, done) => {
-    console.log('request.resolved', request.resolved)
     const possiblePaths = sass.getPathVariations(request.resolved)
     for (let path of possiblePaths) {
       const fullpath = origin + path

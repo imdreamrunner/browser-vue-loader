@@ -76,7 +76,7 @@ export const postcssProcess = async (url, source, options, importModule, classNa
     compiled = await postcss(plugins).process(source, postcssOptions)
   } catch (ex) {
     console.warn(`Error when processing CSS ${url}`, ex)
-    console.log(ex.stack)
+    console.warn(ex.stack)
     return
   }
 

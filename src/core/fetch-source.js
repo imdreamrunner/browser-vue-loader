@@ -14,10 +14,8 @@ export const addToCache = (url, content) => {
  */
 export const fetchFromUrl = async (url) => {
   if (url in fetchCache) {
-    console.log('cached result', url)
     return fetchCache[url]
   } else {
-    console.log('fetch', url)
     const result = await window.fetch(url)
     fetchCache[url] = result
     return result
