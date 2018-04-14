@@ -16,6 +16,14 @@
   }
 </script>
 
+<!--
+In this example, there are 2 CSS class will be loaded to this.$style, the .apple and .banana.
+
+.apple is defined in the imported CSS file ./sample-css.css
+
+.banana is defined locally inside the <style> tag.
+-->
+
 <style module>
   @import "sample-css.css";
   .banana {
