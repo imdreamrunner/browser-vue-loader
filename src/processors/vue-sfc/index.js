@@ -16,12 +16,15 @@ export default class VueProcessor extends BaseProcessor {
     const parts = parseComponent(source)
 
     // <script>
-    const scriptContent = parts.script.content
-    const scriptUrl = url + '#script'
-    addToCache(scriptUrl, scriptContent)
-
-    const scriptKey = constructKey({processor: 'es', url: scriptUrl})
-    dependencies.push(scriptKey)
+    let scriptContent
+    let scriptKey
+    if (parts.script) {
+      scriptContent = parts.script.content
+      const scriptUrl = url + '#script'
+      addToCache(scriptUrl, scriptContent)
+      scriptKey = constructKey({processor: 'es', url: scriptUrl})
+      dependencies.push(scriptKey)
+    }
 
     // <template>
     let templateKey = null
@@ -31,9 +34,9 @@ export default class VueProcessor extends BaseProcessor {
       const templateUrl = url + '#template'
       addToCache(templateUrl, templateContent)
 
-      templateKey = constructKey({processor: 'vue-template', url: templateUrl})
-      dependencies.push(templateKey)
       functionalTemplate = (parts.template.attrs && parts.template.attrs.functional) || false
+      templateKey = constructKey({processor: 'vue-template', url: templateUrl, options: {functional: functionalTemplate}})
+      dependencies.push(templateKey)
     }
 
     // <style>
@@ -64,7 +67,7 @@ export default class VueProcessor extends BaseProcessor {
     }
 
     this.registerDynamic(key, dependencies, true, (require, exports, module) => {
-      const script = require(scriptKey)
+      const script = scriptKey ? require(scriptKey) : null
       let render, staticRenderFns
       if (templateKey) {
         const template = require(templateKey)
