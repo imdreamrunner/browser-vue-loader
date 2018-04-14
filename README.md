@@ -19,7 +19,7 @@ image loaders and etc.
 
 ## Usage
 
-### The Preferred Way Is
+### The Preferred Way
 
 Include the loader and write your script within a `<script type="boom!">`.
 
