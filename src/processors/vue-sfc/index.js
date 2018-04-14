@@ -46,7 +46,7 @@ export default class VueProcessor extends BaseProcessor {
         continue
       }
 
-      const styleUrl = key + '#style-' + md5(style.content)
+      const styleUrl = url + '#style-' + md5(style.content)
       addToCache(styleUrl, style.content)
 
       const scoped = style.scoped

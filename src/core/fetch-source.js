@@ -27,13 +27,18 @@ export const fetchFromUrl = async (url) => {
 /**
  * Fetch the content from the URL.
  * @param url {String} the URL to fetch
+ * @param isBinary {Boolean} if the content is binary
  * @returns {Promise<String>}
  */
-export const fetchContent = async (url) => {
+export const fetchContent = async (url, isBinary) => {
   if (url in localCache) {
     return localCache[url]
   } else {
     const response = await fetchFromUrl(url)
-    return response.text()
+    if (isBinary) {
+      return response.arrayBuffer()
+    } else {
+      return response.text()
+    }
   }
 }

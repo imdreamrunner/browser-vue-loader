@@ -21,6 +21,17 @@ export const lookupNpmPackage = async name => {
   return null
 }
 
+const defaultBinary = [/\.(gif|png|jpe?g|svg)$/i]
+
+export const checkDefaultBinary = url => {
+  for (let tester of defaultBinary) {
+    if (tester.test(url)) {
+      return true
+    }
+  }
+  return false
+}
+
 /**
  * Encode the URL and ! character.
  * @param {String} str URL
@@ -31,7 +42,7 @@ const encodeURIComponentFix = (str) => {
 }
 
 export const splitKey = key => {
-  let processor, url, options
+  let processor, url, options = {}
   if (!key) return {processor, url, options}
   const exclamationMarkPosition = key.indexOf('!')
   if (exclamationMarkPosition < 0) {
@@ -54,10 +65,14 @@ export const constructKey = ({ processor, options, url }) => {
   let result = ''
   if (processor) {
     result += processor
-    if (options) {
-      result += `?${encodeURIComponentFix(JSON.stringify(options))}`
-    }
+  }
+  if (options) {
+    result += `?${encodeURIComponentFix(JSON.stringify(options))}`
+  }
+  if (processor || options) {
     result += '!'
   }
   return result + url
 }
+
+export const extractExtension = url => url.split('.').pop().split(/#|\?/)[0];

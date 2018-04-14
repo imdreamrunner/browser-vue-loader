@@ -1,6 +1,12 @@
 import RegisterLoader from 'es-module-loader/core/register-loader'
 import { fetchContent } from './fetch-source'
-import { splitKey, constructKey, lookupNpmPackage, addDefaultExtension } from './key-utils'
+import {
+  splitKey,
+  constructKey,
+  lookupNpmPackage,
+  addDefaultExtension,
+  checkDefaultBinary,
+} from './key-utils'
 import Router from './router'
 
 class BrowserVueLoader extends RegisterLoader {
@@ -33,6 +39,9 @@ class BrowserVueLoader extends RegisterLoader {
       }
     }
     url = addDefaultExtension(url)
+    if (checkDefaultBinary(url)) {
+      options.binary = true
+    }
     return constructKey({processor, url, options})
   }
 
@@ -41,8 +50,8 @@ class BrowserVueLoader extends RegisterLoader {
    */
   async [RegisterLoader.instantiate] (key) {
     console.log('instantiate', key)
-    const {processor, url} = splitKey(key)
-    const source = await fetchContent(url)
+    const {processor, url, options} = splitKey(key)
+    const source = await fetchContent(url, Boolean(options.binary))
     if (processor) {
       await this.router.routeTo(processor, key, source)
     } else {
@@ -54,4 +63,5 @@ class BrowserVueLoader extends RegisterLoader {
 // create the loader instance.
 export const loader = new BrowserVueLoader()
 
-export const loadVue = (entryUrl) => loader.import(entryUrl).then(m => m.default ? m.default : m)
+export const loadVue = (entryUrl) => loader.import(entryUrl).
+  then(m => m.default ? m.default : m)

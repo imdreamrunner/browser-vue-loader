@@ -3,11 +3,12 @@ import CssProcessor from '../processors/css'
 import {ScssProcessor} from '../processors/sass'
 import VueSfcProcessor from '../processors/vue-sfc'
 import VueTemplateProcessor from '../processors/vue-template'
+import ImageProcessor from '../processors/image'
 
 const routingTable = [
   {
     name: 'js',
-    matcher: /.*\.js/,
+    matcher: /\.js$/,
     processor: EsModuleProcessor
   },
   {
@@ -24,23 +25,28 @@ const routingTable = [
   },
   {
     name: 'vue-sfc',
-    matcher: /.*\.vue/,
+    matcher: /\.vue$/,
     processor: VueSfcProcessor
   },
   {
     name: 'vue-template',
-    matcher: /.*\.vue/,
+    matcher: /\.vue$/,
     processor: VueTemplateProcessor
   },
   {
     name: 'css',
-    matcher: /.*\.css/,
+    matcher: /\.css$/,
     processor: CssProcessor
   },
   {
     name: 'scss',
-    matcher: /.*\.scss/,
+    matcher: /\.scss$/,
     processor: ScssProcessor
+  },
+  {
+    name: 'image',
+    matcher: /\.(gif|png|jpe?g|svg)$/i,
+    processor: ImageProcessor
   }
 ]
 
