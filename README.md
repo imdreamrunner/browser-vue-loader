@@ -115,12 +115,24 @@ import _ from 'amd!lodash';  // Treat the module as an AMD module
 
 ## Contributors's Guide
 
-To develop:
+Want to contribute to this loader? That's great!
 
-```bash
-npm install
-npm run dev
-```
+We recommend you to use [yarn](https://yarnpkg.com/en/docs/getting-started)
+to manage the dependencies. However, you can certainly use `npm` instead.
+
+After cloning the repository, use `yarn` command to install the dependencies.
+Other commands and their descriptions are below.
+
+| Command | Description |
+|---------|-------------|
+| `yarn` | Install the dependencies. |
+| `yarn dev` | Run the webpack dev server. |
+| `yarn build` | Build the library. |
+| `yarn test` | Run the test cases with karma. |
+
+Note: we chose to commit `dist` directory to git for convenience.
+There is so far no issue for it. However we might consider ignoring it
+from our git repository if it grows too big one day.
 
 ## Credits
 

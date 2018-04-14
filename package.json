@@ -10,7 +10,7 @@
     "dev": "cross-env NODE_ENV=dev webpack-dev-server --progress --mode development --config webpack.config.dev.js",
     "build": "webpack -p --progress --mode production --config webpack.config.build.js",
     "test": "karma start --single-run",
-    "test-watch": "karma start",
+    "start-test": "karma start",
     "prepack": "npm run build",
     "lint": "standard --verbose --fix"
   },
