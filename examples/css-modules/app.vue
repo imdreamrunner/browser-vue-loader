@@ -9,9 +9,8 @@
 <script>
   export default {
     data () {
-      console.log(this.$style)
       return {
-        msg: 'loaded'
+        msg: `CSS Module is loaded. this.$style = ${JSON.stringify(this.$style)}`
       }
     }
   }

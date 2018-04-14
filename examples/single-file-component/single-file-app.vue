@@ -14,7 +14,7 @@
   }
 </script>
 
-<style scoped>
+<style>
   .app h1 {
     color: red
   }

@@ -129,6 +129,8 @@ Other commands and their descriptions are below.
 | `yarn dev` | Run the webpack dev server. |
 | `yarn build` | Build the library. |
 | `yarn test` | Run the test cases with karma. |
+| `yarn start-test` | Start karma test runner. |
+| `yarn run-test --grep="Test Name"` | Run single test. |
 
 Note: we chose to commit `dist` directory to git for convenience.
 There is so far no issue for it. However we might consider ignoring it

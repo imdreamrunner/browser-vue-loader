@@ -3,27 +3,17 @@
 
 import { describe, it, before } from 'mocha'
 import { expect } from 'chai'
-import { loadLib } from './helpers'
+import { wait, open } from './helpers'
 
-describe('Loading the browser-vue-loader.js', () => {
+describe('Global loadVue Method', () => {
+  let child
+
   before(async () => {
-    await loadLib()
+    child = await open('/base/examples/single-file-component/index.html')
   })
 
-  it('should register loadVue method globally.', () => {
-    expect(loadVue).to.be.a('function')
+  it('should register loadVue method globally.', async () => {
+    while (!child.window.loadVue) await wait(100)
+    expect(child.window.loadVue).to.be.a('function')
   })
-
-  it('should be able to load ES modules', async () => {
-    const module = await loadVue('/base/examples/es-modules/sample-es-module')
-    expect(module).is.not.null
-    expect(module.currentModuleFunction).to.be.a('function')
-    expect(module.currentModuleFunction()).to.equal(1)
-
-    expect(module.loadedFromOtherModule).to.be.a('function')
-    expect(module.loadedFromOtherModule()).to.equal('abc')
-
-    expect(module.importFromLodash).to.be.a('function')
-    expect(module.importFromLodash()).to.deep.equal([[1, 3], [2, 4]])
-  }).timeout(20000)
 })

@@ -1,3 +1,5 @@
+/* globals $ */
+
 let loaded = false
 
 export const loadLib = (timeout = null) => {
@@ -16,3 +18,14 @@ export const createDiv = (id = 'app') => {
 }
 
 export const wait = ms => new Promise(resolve => setTimeout(resolve, ms))
+
+export const open = (url) => {
+  const child = window.open(url, 'Test Window')
+  const methods = {
+    find: selector => $(child.document).contents().find(selector),
+    window: child
+  }
+  return new Promise((resolve, reject) => {
+    $(child.document).ready(() => resolve(methods))
+  })
+}
