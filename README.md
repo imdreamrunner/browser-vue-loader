@@ -301,7 +301,7 @@ The image will be fetched and converted to base64 data URL automatically.
 </script>
 ```
 
-* [➡️ Import Images](https://imdreamrunner.github.io/browser-vue-loader/examples/import-images/)
+* [➡️ Import Images](https://imdreamrunner.github.io/browser-vue-loader/examples/import-image/)
 
 ## Contributors's Guide
 
