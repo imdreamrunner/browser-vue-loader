@@ -13,6 +13,11 @@ This loader is ideal for rapid prototyping. With the loader,
 you don't have to configure built tools, but rather write
 the application code and run them in the browser.
 
+In many ways, this loader behaves very similar to the
+[vue-loader](https://github.com/vuejs/vue-loader) for Webpack.
+The major difference is that this loader does not access
+the local file system and requires no build steps.
+
 We prefer convention over configuration in this loader.
 It's pre-configured with NPM module loaders, CSS processors,
 image loaders and etc.
@@ -58,24 +63,44 @@ loadVue('./App.vue').then(App => {
 
 ## Supporting Features
 
-### Loads Vue single file components and ES modules
+### Loads Vue single-file components from a URL
 
-The `loadVue` methods supports both Vue single file components and ES modules.
+The `loadVue` method can load Vue single-file components. The method takes only
+one argument, which is the URL of the file to be fetched from.
+The URL must be either relative or full, such as `./App.vue` or `http://example.com/path/to/App.vue`.
 
-Examples:
+In the following example, we load the `./single-file-app.vue` component by `loadVue('./single-file-app.vue')`.
+The `loadVue` method will return a `Promise` of the component.
+When the promise is resolved, we can create the Vue app by mounting it to a DOM element.
 
-* [➡️ Load Vue SFC](https://imdreamrunner.github.io/browser-vue-loader/examples/single-file-component/)
+```javascript
+loadVue('./single-file-app.vue').then(App => {
+  new Vue({
+    render: h => h(App)
+  }).$mount('#app')
+})
+```
+
+* [➡️ Vue's Single-File Component](https://imdreamrunner.github.io/browser-vue-loader/examples/single-file-component/)
+
+### Loads any ES module from a URL
+
+Beside Vue single-file components, the loader can actually load any ES module to the web page.
+
+In the following example, a ES component is loaded by `loadVue('./sample-es-module')`.
+
 * [➡️ Load ES Module](https://imdreamrunner.github.io/browser-vue-loader/examples/es-modules/)
 
-In `<script type="boom!">` or your source code, you can also use the import statement
-to load another module. The name of the loaded module must be a relative or full
-URL, such as `./App.vue` or `http://example.com/path/to/App.vue`.
+### Use `import` statement as usual
+
+In the `<script type="boom!">` or your source code, you can also use the import statement
+to load another module. Just as what you would do normally with webpack and babel configured.
 
 ```javascript
 import App from './App.vue';
 ```
 
-The module system is based on the
+The loader's module system is based on the
 [WhatWG loader specification](https://whatwg.github.io/loader/),
 which describes the behavior of loading JavaScript modules from a
 JavaScript host environment.
@@ -85,8 +110,7 @@ contains of two components `App.vue` and `Todos.vue`.
 
 * [➡️ TODO MVC](https://imdreamrunner.github.io/browser-vue-loader/examples/todo-mvc/)
 
-
-### Loads a CommonJS or AMD module from NPM registry
+### Loads a CommonJS or AMD module from a URL or NPM registry
 
 The loader can directly load a CommonJS or AMD module from NPM registry,
 if the name of the module cannot be resolved to a valid URL.
@@ -112,6 +136,138 @@ For example, the following 2 import statements are working.
 import Vue from 'commonjs!vue';  // Treat the module as a CommonJS module
 import _ from 'amd!lodash';  // Treat the module as an AMD module
 ```
+
+### Functional component by template
+
+You can write Vue's functional component in a `.vue` file. All you need is to
+mark the `<template>` to be `functional`, as the example below.
+
+```html
+<template functional>
+  <div>
+    <h1 class="inside">Hello from {{ props.location }}!</h1>
+  </div>
+</template>
+```
+
+* [➡️ Functional Component](https://imdreamrunner.github.io/browser-vue-loader/examples/vue-functional-component/)
+
+### Scoped CSS
+
+Scoped CSS is supported in single-file components.
+
+```html
+<style scoped>
+.example {
+  color: red;
+}
+</style>
+
+<template>
+  <div class="example">hi</div>
+</template>
+```
+
+* [➡️ Scoped CSS](https://imdreamrunner.github.io/browser-vue-loader/examples/vue-functional-component/)
+
+Note: the second line in this example is created by the child component with a
+scoped CSS style setting the color to blue.
+
+### SASS (with both SCSS and SASS style)
+
+Feel free to use SASS in the single-file component. CSS processors are already configured for you.
+
+```html
+<style lang="scss">
+  $purple-color: rgb(128, 0, 128);
+  .purple {
+    color: $purple-color;
+  }
+</style>
+```
+
+### Use @import in CSS or SASS
+
+You can use `@import` in the CSS or SASS code.
+
+The loader will convert them into a special ES module and add to the registry.
+Same file will not be downloaded twice.
+
+In the single-file component:
+
+```html
+<style lang="scss">
+  @import "sample-scss";
+  .pink {
+    color: $pink-color;
+  }
+</style>
+```
+
+In `sample-scss.scss`
+
+```scss
+$pink-color: rgb(255, 192, 203)
+```
+
+* [➡️ CSS @import](https://imdreamrunner.github.io/browser-vue-loader/examples/css-at-import/)
+
+### CSS Modules
+
+Modularize your CSS by [CSS Modules](https://github.com/css-modules/css-modules). They are supported!
+
+For example, the `.banana` style below can be accessed by `this.$style.banana`.
+
+```html
+<style module>
+  .banana {
+    color: yellow;
+  }
+</style>
+```
+
+And the `.orange` style below can be accessed by `this.namedModule.orange`.
+
+```html
+<style module="namedModule">
+  .orange {
+    color: orange;
+  }
+</style>
+
+```
+
+* [➡️ CSS @import](https://imdreamrunner.github.io/browser-vue-loader/examples/css-modules/)
+
+### Images
+
+A web page is not complete without images.
+You can import images as if an ES module,
+and use them like a URL.
+
+The image will be fetched and converted to base64 data URL automatically.
+
+```html
+<template>
+  <div class="app">
+    <img class="image-1" :src="pngImage" />
+    <img class="image-2" :src="svgImage" />
+  </div>
+</template>
+
+<script>
+  import pngImage from "./logo.png"
+  import svgImage from "./logo.svg"
+
+  export default {
+    data () {
+      return {pngImage, svgImage}
+    }
+  }
+</script>
+```
+
+* [➡️ Import Images](https://imdreamrunner.github.io/browser-vue-loader/examples/import-images/)
 
 ## Contributors's Guide
 
