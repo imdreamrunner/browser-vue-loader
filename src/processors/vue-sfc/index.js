@@ -60,8 +60,7 @@ export default class VueProcessor extends BaseProcessor {
       dependencies.push(styleKey)
       styleKeyList.push(styleKey)
 
-      const moduleName = '$style'
-      cssModules[styleKey] = moduleName
+      cssModules[styleKey] = style.module === true ? '$style' : style.module
     }
 
     this.registerDynamic(key, dependencies, true, (require, exports, module) => {
@@ -81,7 +80,7 @@ export default class VueProcessor extends BaseProcessor {
         })
       }
 
-      const Component = componentNormalizer(
+      module.exports = componentNormalizer(
         script,
         render,
         staticRenderFns,
@@ -89,8 +88,6 @@ export default class VueProcessor extends BaseProcessor {
         loadStyleFunction,
         hasScopedStyle ? scopeId : null
       ).exports
-
-      module.exports = Component
     })
   }
 }
