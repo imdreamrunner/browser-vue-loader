@@ -1,4 +1,3 @@
-/* globals loadVue */
 /* eslint-disable no-unused-expressions */
 
 import { describe, it, before } from 'mocha'

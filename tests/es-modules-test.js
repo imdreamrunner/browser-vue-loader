@@ -1,4 +1,3 @@
-/* globals loadVue */
 /* eslint-disable no-unused-expressions */
 
 import { describe, it, before } from 'mocha'
@@ -13,7 +12,7 @@ describe('ES Modules.', () => {
   })
 
   it('Should be able to load ES modules', async () => {
-    while(!child.window.module) await wait(100)
+    while (!child.window.module) await wait(100)
 
     const module = child.window.module
 
