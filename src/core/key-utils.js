@@ -1,3 +1,14 @@
+/**
+ * Util functions for key related actions.
+ *
+ * Format of the key
+ *
+ *   [processor]?[base64 formatted options]![url]
+ *
+ * You may use {@link splitKey} to turn a string key into parts
+ * and {@link constructKey} to make parts to form a string key.
+ */
+
 import { fetchFromUrl } from './fetch-source'
 
 const defaultExtension = 'js'
@@ -41,8 +52,15 @@ const encodeURIComponentFix = (str) => {
   return encodeURIComponent(str).replace(/!/g, '%21')
 }
 
+/**
+ * Split the key into components
+ * @param key {String} the key
+ * @returns {{processor: {String}, url: {String}, options: {}}} the result
+ */
 export const splitKey = key => {
-  let processor, url, options = {}
+  let processor, url, options
+  // set default value to options
+  options = {}
   if (!key) return {processor, url, options}
   const exclamationMarkPosition = key.indexOf('!')
   if (exclamationMarkPosition < 0) {
@@ -75,4 +93,4 @@ export const constructKey = ({ processor, options, url }) => {
   return result + url
 }
 
-export const extractExtension = url => url.split('.').pop().split(/#|\?/)[0];
+export const extractExtension = url => url.split('.').pop().split(/#|\?/)[0]

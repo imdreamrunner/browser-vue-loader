@@ -5,7 +5,7 @@ import {
   constructKey,
   lookupNpmPackage,
   addDefaultExtension,
-  checkDefaultBinary,
+  checkDefaultBinary
 } from './key-utils'
 import Router from './router'
 
@@ -63,5 +63,5 @@ class BrowserVueLoader extends RegisterLoader {
 // create the loader instance.
 export const loader = new BrowserVueLoader()
 
-export const loadVue = (entryUrl) => loader.import(entryUrl).
-  then(m => m.default ? m.default : m)
+export const loadVue = (entryUrl) => loader.import(entryUrl)
+  .then(m => m.default ? m.default : m)

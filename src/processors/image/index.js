@@ -11,7 +11,7 @@ function arrayBufferToBase64 (buffer) {
   return window.btoa(binary)
 }
 
-function getImageType(extension) {
+function getImageType (extension) {
   if (extension === 'svg') {
     return `image/svg+xml`
   } else {
