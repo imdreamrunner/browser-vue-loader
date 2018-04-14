@@ -19,8 +19,8 @@ The major difference is that this loader does not access
 the local file system and requires no build steps.
 
 We prefer convention over configuration in this loader.
-It's pre-configured with NPM module loaders, CSS processors,
-image loaders and etc.
+You can load Vue's single-file component, ES module,
+NPM packages, SASS styles and even images directly!
 
 ## Usage
 
@@ -33,7 +33,7 @@ Include the loader and write your script within a `<script type="boom!">`.
 
 <script type="boom!">
 import Vue from 'vue';
-import App from './todo-mvc-import-vue/App.vue';
+import App from './path-to-your/App.vue';
 new Vue({
   render: h => h(App)
 }).$mount('#app')
@@ -122,7 +122,7 @@ import Vue from 'vue';
 ```
 
 The loader will realise that the string `vue` is not a valid URL, so
-if will search for the package use the [unpkg.com](https://unpkg.com/)
+it will search for the package use the [unpkg.com](https://unpkg.com/)
 CDN. The actual URL of the module will be resolved to
 `https://unpkg.com/vue@2.5.16/dist/vue.js`.
 
@@ -136,6 +136,8 @@ For example, the following 2 import statements are working.
 import Vue from 'commonjs!vue';  // Treat the module as a CommonJS module
 import _ from 'amd!lodash';  // Treat the module as an AMD module
 ```
+
+* [➡️ Load Lodash](https://imdreamrunner.github.io/browser-vue-loader/examples/es-modules/)
 
 ### Functional component by template
 
@@ -151,6 +153,36 @@ mark the `<template>` to be `functional`, as the example below.
 ```
 
 * [➡️ Functional Component](https://imdreamrunner.github.io/browser-vue-loader/examples/vue-functional-component/)
+
+### Use JSX
+
+Sometimes you may wish to write a render function instead of a template.
+JSX allows you to write something similar to HTML tags inside JavaScript.
+
+```html
+<script>
+  import HelloComponent from './hello-component.vue'
+
+  export default {
+    data () {
+      return {
+        msg: 'Hello!'
+      }
+    },
+
+    render: function (h) {
+      return (
+        <div>
+          <h1 class="outside">{ this.msg }</h1>
+          <HelloComponent location="the other side" />
+        </div>
+      )
+    }
+  }
+</script>
+``` 
+
+* [➡️ Vue with JSX](https://imdreamrunner.github.io/browser-vue-loader/examples/vue-jsx/)
 
 ### Scoped CSS
 
@@ -185,6 +217,8 @@ Feel free to use SASS in the single-file component. CSS processors are already c
   }
 </style>
 ```
+
+* [➡️ SASS](https://imdreamrunner.github.io/browser-vue-loader/examples/sass/)
 
 ### Use @import in CSS or SASS
 
