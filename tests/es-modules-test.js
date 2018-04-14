@@ -4,7 +4,7 @@ import { describe, it, before } from 'mocha'
 import { expect } from 'chai'
 import { wait, open } from './helpers'
 
-describe('ES Modules.', () => {
+describe('ES Modules', () => {
   let child
 
   before(async () => {

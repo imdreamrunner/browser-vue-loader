@@ -9,7 +9,7 @@
   "scripts": {
     "dev": "cross-env NODE_ENV=dev webpack-dev-server --progress --mode development --config webpack.config.dev.js",
     "build": "webpack -p --progress --mode production --config webpack.config.build.js",
-    "test": "karma start --single-run",
+    "test": "HEDLESS=true karma start --single-run",
     "prepack": "npm run build",
     "lint": "standard --verbose --fix",
     "start-test": "karma start --no-auto-watch",
@@ -30,9 +30,11 @@
   },
   "dependencies": {
     "babel-eslint": "^8.2.2",
+    "babel-plugin-syntax-jsx": "^6.18.0",
     "babel-plugin-transform-amd-system-wrapper": "^0.3.7",
     "babel-plugin-transform-cjs-system-wrapper": "^0.6.2",
-    "babel-plugin-transform-es2015-modules-systemjs": "latest",
+    "babel-plugin-transform-es2015-modules-systemjs": "^6.24.1",
+    "babel-plugin-transform-vue-jsx": "^3.7.0",
     "babel-standalone": "^6.26.0",
     "css-modules-loader-core": "^1.1.0",
     "es-module-loader": "^2.2.8",
