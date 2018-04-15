@@ -81,7 +81,10 @@ loadVue('./single-file-app.vue').then(App => {
 })
 ```
 
-* [➡️ Vue's Single-File Component](https://imdreamrunner.github.io/browser-vue-loader/examples/single-file-component/)
+* [➡️ Vue's Single-File Component][example-single-file-component] [📋 Source Code][src-example-single-file-component]
+
+[example-single-file-component]: https://imdreamrunner.github.io/browser-vue-loader/examples/single-file-component/
+[src-example-single-file-component]: https://github.com/imdreamrunner/browser-vue-loader/tree/master/examples/single-file-component
 
 ### Loads any ES module from a URL
 
