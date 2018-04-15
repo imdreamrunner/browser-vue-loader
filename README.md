@@ -139,6 +139,27 @@ import _ from 'amd!lodash';  // Treat the module as an AMD module
 
 * [➡️ Load Lodash](https://imdreamrunner.github.io/browser-vue-loader/examples/es-modules/)
 
+### Use Vuex
+
+Vuex is a aentralized state management library for Vue. You can use Vuex in your project with this loader.
+
+```javascript
+import Vue from 'vue'
+import Vuex from 'vuex'
+import { state, mutations } from './mutations'
+import plugins from './plugins'
+
+Vue.use(Vuex)
+
+export default new Vuex.Store({
+  state,
+  mutations,
+  plugins
+})
+```
+
+* [➡️ TODO MVC](https://imdreamrunner.github.io/browser-vue-loader/examples/todo-mvc/)
+
 ### Functional component by template
 
 You can write Vue's functional component in a `.vue` file. All you need is to
