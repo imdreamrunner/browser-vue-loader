@@ -115,7 +115,7 @@ export const splitKey = key => {
 /**
  * Construct a key with different components.
  * @param {String} processor
- * @param {Object} options
+ * @param {Object|undefined} options
  * @param {String} url
  * @return {string} the constructed key
  */

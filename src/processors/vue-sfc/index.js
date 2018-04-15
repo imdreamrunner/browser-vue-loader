@@ -34,8 +34,13 @@ export default class VueProcessor extends BaseProcessor {
       const templateUrl = url + '#template'
       addToCache(templateUrl, templateContent)
 
-      functionalTemplate = (parts.template.attrs && parts.template.attrs.functional) || false
-      templateKey = constructKey({processor: 'vue-template', url: templateUrl, options: {functional: functionalTemplate}})
+      functionalTemplate = (parts.template.attrs &&
+        parts.template.attrs.functional) || false
+      templateKey = constructKey({
+        processor: 'vue-template',
+        url: templateUrl,
+        options: {functional: functionalTemplate}
+      })
       dependencies.push(templateKey)
     }
 
@@ -59,38 +64,40 @@ export default class VueProcessor extends BaseProcessor {
         throw new Error(`Style "${lang}" is not supported.`)
       }
       const styleOptions = {scopeId, scoped, module: style.module}
-      const styleKey = constructKey({processor: lang, url: styleUrl, options: styleOptions})
+      const styleKey = constructKey(
+        {processor: lang, url: styleUrl, options: styleOptions})
       dependencies.push(styleKey)
       styleKeyList.push(styleKey)
 
       cssModules[styleKey] = style.module === true ? '$style' : style.module
     }
 
-    this.registerDynamic(key, dependencies, true, (require, exports, module) => {
-      const script = scriptKey ? require(scriptKey) : null
-      let render, staticRenderFns
-      if (templateKey) {
-        const template = require(templateKey)
-        render = template.render
-        staticRenderFns = template.staticRenderFns
-      }
+    this.registerDynamic(key, dependencies, true,
+      (require, exports, module) => {
+        const script = scriptKey ? require(scriptKey) : null
+        let render, staticRenderFns
+        if (templateKey) {
+          const template = require(templateKey)
+          render = template.render
+          staticRenderFns = template.staticRenderFns
+        }
 
-      function loadStyleFunction () {
-        styleKeyList.forEach(styleKey => {
-          const requiredStyle = require(styleKey)
-          requiredStyle.injectStyle()
-          this[cssModules[styleKey]] = requiredStyle.classNameMapping
-        })
-      }
+        function loadStyleFunction () {
+          styleKeyList.forEach(styleKey => {
+            const requiredStyle = require(styleKey)
+            requiredStyle.injectStyle()
+            this[cssModules[styleKey]] = requiredStyle.classNameMapping
+          })
+        }
 
-      module.exports = componentNormalizer(
-        script,
-        render,
-        staticRenderFns,
-        functionalTemplate,
-        loadStyleFunction,
-        hasScopedStyle ? scopeId : null
-      ).exports
-    })
+        module.exports = componentNormalizer(
+          script,
+          render,
+          staticRenderFns,
+          functionalTemplate,
+          loadStyleFunction,
+          hasScopedStyle ? scopeId : null
+        ).exports
+      })
   }
 }
