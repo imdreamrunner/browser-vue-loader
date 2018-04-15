@@ -92,10 +92,10 @@ Beside Vue single-file components, the loader can actually load any ES module to
 
 In the following example, a ES component is loaded by `loadVue('./sample-es-module')`.
 
-* [➡️ Load ES Module][example-es-module] [📋 Source Code][src-example-es-module]
+* [➡️ Load ES Module][example-es-modules] [📋 Source Code][src-example-es-modules]
 
-[example-es-module]: https://imdreamrunner.github.io/browser-vue-loader/examples/es-modules/
-[src-example-es-module]: https://github.com/imdreamrunner/browser-vue-loader/tree/master/examples/es-modules/
+[example-es-modules]: https://imdreamrunner.github.io/browser-vue-loader/examples/es-modules/
+[src-example-es-modules]: https://github.com/imdreamrunner/browser-vue-loader/tree/master/examples/es-modules/
 
 ### Use `import` statement as usual
 
