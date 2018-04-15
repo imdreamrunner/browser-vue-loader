@@ -92,7 +92,10 @@ Beside Vue single-file components, the loader can actually load any ES module to
 
 In the following example, a ES component is loaded by `loadVue('./sample-es-module')`.
 
-* [➡️ Load ES Module](https://imdreamrunner.github.io/browser-vue-loader/examples/es-modules/)
+* [➡️ Load ES Module][example-es-module] [📋 Source Code][src-example-es-module]
+
+[example-es-module]: https://imdreamrunner.github.io/browser-vue-loader/examples/es-modules/
+[src-example-es-module]: https://github.com/imdreamrunner/browser-vue-loader/tree/master/examples/es-modules/
 
 ### Use `import` statement as usual
 
@@ -111,7 +114,10 @@ JavaScript host environment.
 A more complete example of a Vue application is the TODO MVC, which
 contains of two components `App.vue` and `Todos.vue`.
 
-* [➡️ TODO MVC](https://imdreamrunner.github.io/browser-vue-loader/examples/todo-mvc/)
+* [➡️ TODO MVC][example-todo-mvc] [📋 Source Code][src-example-todo-mvc]
+
+[example-todo-mvc]: https://imdreamrunner.github.io/browser-vue-loader/examples/todo-mvc/
+[src-example-todo-mvc]: https://github.com/imdreamrunner/browser-vue-loader/tree/master/examples/todo-mvc/
 
 ### Loads a CommonJS or AMD module from a URL or NPM registry
 
@@ -140,7 +146,7 @@ import Vue from 'commonjs!vue';  // Treat the module as a CommonJS module
 import _ from 'amd!lodash';  // Treat the module as an AMD module
 ```
 
-* [➡️ Load Lodash](https://imdreamrunner.github.io/browser-vue-loader/examples/es-modules/)
+* [➡️ Load Lodash][example-es-modules] [📋 Source Code][src-example-es-modules]
 
 ### Use Vuex
 
@@ -161,7 +167,7 @@ export default new Vuex.Store({
 })
 ```
 
-* [➡️ TODO MVC](https://imdreamrunner.github.io/browser-vue-loader/examples/todo-mvc/)
+* [➡️ TODO MVC][example-todo-mvc] [📋 Source Code][src-example-todo-mvc]
 
 ### Functional component by template
 
@@ -176,7 +182,10 @@ mark the `<template>` to be `functional`, as the example below.
 </template>
 ```
 
-* [➡️ Functional Component](https://imdreamrunner.github.io/browser-vue-loader/examples/vue-functional-component/)
+* [➡️ Functional Component][example-vue-functional-component] [📋 Source Code][src-example-vue-functional-component]
+
+[example-vue-functional-component]: https://imdreamrunner.github.io/browser-vue-loader/examples/vue-functional-component/
+[src-example-vue-functional-component]: https://github.com/imdreamrunner/browser-vue-loader/tree/master/examples/vue-functional-component/
 
 ### Use JSX
 
@@ -206,7 +215,10 @@ JSX allows you to write something similar to HTML tags inside JavaScript.
 </script>
 ``` 
 
-* [➡️ Vue with JSX](https://imdreamrunner.github.io/browser-vue-loader/examples/vue-jsx/)
+* [➡️ Vue with JSX][example-vue-jsx] [📋 Source Code][src-example-vue-jsx]
+
+[example-vue-jsx]: https://imdreamrunner.github.io/browser-vue-loader/examples/vue-jsx/
+[src-example-vue-jsx]: https://github.com/imdreamrunner/browser-vue-loader/tree/master/examples/vue-jsx/
 
 ### Scoped CSS
 
@@ -224,7 +236,7 @@ Scoped CSS is supported in single-file components.
 </template>
 ```
 
-* [➡️ Scoped CSS](https://imdreamrunner.github.io/browser-vue-loader/examples/vue-functional-component/)
+* [➡️ Scoped CSS][example-vue-functional-component] [📋 Source Code][src-example-vue-functional-component]
 
 Note: the second line in this example is created by the child component with a
 scoped CSS style setting the color to blue.
@@ -242,7 +254,10 @@ Feel free to use SASS in the single-file component. CSS processors are already c
 </style>
 ```
 
-* [➡️ SASS](https://imdreamrunner.github.io/browser-vue-loader/examples/sass/)
+* [➡️ SASS][example-sass] [📋 Source Code][src-example-sass]
+
+[example-sass]: https://imdreamrunner.github.io/browser-vue-loader/examples/sass/
+[src-example-sass]: https://github.com/imdreamrunner/browser-vue-loader/tree/master/examples/sass/
 
 ### Use @import in CSS or SASS
 
@@ -268,7 +283,11 @@ In `sample-scss.scss`
 $pink-color: rgb(255, 192, 203)
 ```
 
-* [➡️ CSS @import](https://imdreamrunner.github.io/browser-vue-loader/examples/css-at-import/)
+* [➡️ CSS @import][example-css-at-import] [📋 Source Code][src-example-css-at-import]
+
+[example-css-at-import]: https://imdreamrunner.github.io/browser-vue-loader/examples/css-at-import/
+[src-example-css-at-import]: https://github.com/imdreamrunner/browser-vue-loader/tree/master/examples/css-at-import/
+
 
 ### CSS Modules
 
@@ -295,7 +314,10 @@ And the `.orange` style below can be accessed by `this.namedModule.orange`.
 
 ```
 
-* [➡️ CSS @import](https://imdreamrunner.github.io/browser-vue-loader/examples/css-modules/)
+* [➡️ CSS Modules][example-css-modules] [📋 Source Code][src-example-css-modules]
+
+[example-css-modules]: https://imdreamrunner.github.io/browser-vue-loader/examples/css-modules/
+[src-example-css-modules]: https://github.com/imdreamrunner/browser-vue-loader/tree/master/examples/css-modules/
 
 ### Images
 
@@ -325,7 +347,10 @@ The image will be fetched and converted to base64 data URL automatically.
 </script>
 ```
 
-* [➡️ Import Images](https://imdreamrunner.github.io/browser-vue-loader/examples/import-image/)
+* [➡️ Import Images][example-import-image] [📋 Source Code][src-example-import-image]
+
+[example-import-image]: https://imdreamrunner.github.io/browser-vue-loader/examples/import-image/
+[src-example-import-image]: https://github.com/imdreamrunner/browser-vue-loader/tree/master/examples/import-image/
 
 ## Contributors's Guide
 
