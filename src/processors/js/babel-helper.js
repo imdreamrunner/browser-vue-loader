@@ -3,6 +3,7 @@ import babelPluginTransformES2015ModulesSystemJS from 'babel-plugin-transform-es
 import babelPluginSyntaxDynamicImport from 'babel-plugin-syntax-dynamic-import'
 import babelPluginTransformAmdSystemWrapper from 'babel-plugin-transform-amd-system-wrapper'
 import babelPluginTransformCjsSystemWrapper from 'babel-plugin-transform-cjs-system-wrapper'
+import babelPluginTransformObjectRestSpread from 'babel-plugin-transform-object-rest-spread'
 import babelPluginTransformVueJsx from 'babel-plugin-transform-vue-jsx'
 
 export function transpile (key, source, options) {
@@ -10,8 +11,10 @@ export function transpile (key, source, options) {
 
   let plugins = [
     babelPluginSyntaxDynamicImport,
+    babelPluginTransformObjectRestSpread,
     babelPluginTransformVueJsx,
-    babelPluginTransformES2015ModulesSystemJS]
+    babelPluginTransformES2015ModulesSystemJS
+  ]
 
   if (module === 'amd') {
     plugins = [babelPluginTransformAmdSystemWrapper]

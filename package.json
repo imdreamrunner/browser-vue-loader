@@ -34,6 +34,7 @@
     "babel-plugin-transform-amd-system-wrapper": "^0.3.7",
     "babel-plugin-transform-cjs-system-wrapper": "^0.6.2",
     "babel-plugin-transform-es2015-modules-systemjs": "^6.24.1",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-plugin-transform-vue-jsx": "^3.7.0",
     "babel-standalone": "^6.26.0",
     "css-modules-loader-core": "^1.1.0",

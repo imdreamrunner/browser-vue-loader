@@ -4,7 +4,7 @@ import {
   splitKey,
   constructKey,
   lookupNpmPackage,
-  addDefaultExtension,
+  resolveActualUrl,
   checkDefaultBinary
 } from './key-utils'
 import Router from './router'
@@ -38,7 +38,7 @@ class BrowserVueLoader extends RegisterLoader {
         processor = processor || 'commonjs'
       }
     }
-    url = addDefaultExtension(url)
+    url = await resolveActualUrl(url)
     if (checkDefaultBinary(url)) {
       options.binary = true
     }

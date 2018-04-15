@@ -12,7 +12,7 @@ export const addToCache = (url, content) => {
  * @param url {String} the URL to fetch
  * @returns {Promise<object>}
  */
-export const fetchFromUrl = async (url) => {
+export const fetchFromUrl = async url => {
   if (url in fetchCache) {
     return fetchCache[url]
   } else {
@@ -20,6 +20,11 @@ export const fetchFromUrl = async (url) => {
     fetchCache[url] = result
     return result
   }
+}
+
+export const checkResourceByUrl = async url => {
+  const result = await fetchFromUrl(url)
+  return result.status === 200
 }
 
 /**

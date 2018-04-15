@@ -9,15 +9,20 @@
  * and {@link constructKey} to make parts to form a string key.
  */
 
-import { fetchFromUrl } from './fetch-source'
+import { checkResourceByUrl, fetchFromUrl } from './fetch-source'
 
-const defaultExtension = 'js'
-
-export const addDefaultExtension = url => {
+export const resolveActualUrl = async url => {
   const pathSplits = url.split('/')
   const filename = pathSplits[pathSplits.length - 1]
   if (url.indexOf('http') >= 0 && filename.indexOf('.') < 0 && url.indexOf('unpkg') < 0) {
-    url = url + '.' + defaultExtension
+    if (await checkResourceByUrl(url + '.js')) {
+      url = url + '.js'
+      return url
+    }
+    if (await checkResourceByUrl(url + '/index.js')) {
+      url = url + '/index.js'
+      return url
+    }
   }
   return url
 }

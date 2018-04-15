@@ -45,13 +45,13 @@ export default class VueProcessor extends BaseProcessor {
     let hasScopedStyle = false
     const cssModules = {}
     for (let style of parts.styles) {
-      if (!style.content) {
-        continue
+      let styleUrl
+      if (style.src) {
+        styleUrl = style.src
+      } else {
+        styleUrl = url + '#style-' + md5(style.content)
+        addToCache(styleUrl, style.content)
       }
-
-      const styleUrl = url + '#style-' + md5(style.content)
-      addToCache(styleUrl, style.content)
-
       const scoped = style.scoped
       if (scoped) hasScopedStyle = true
       const lang = style.lang || 'css'

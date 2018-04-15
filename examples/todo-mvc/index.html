@@ -1,3 +1,7 @@
+<!--
+Source code of this example is modified from
+https://github.com/vuejs/vuex/blob/dev/examples/todomvc/
+-->
 <!doctype html>
 <html lang="en">
 <head>
@@ -9,11 +13,15 @@
 <body>
 <div id="app"></div>
 <script type="boom!">
-import Vue from 'vue';
-import App from './App.vue';
+import Vue from 'vue'
+import store from './store'
+import App from './components/App.vue'
+
 new Vue({
+  store, // inject store to all children
+  el: '#app',
   render: h => h(App)
-}).$mount('#app')
+})
 </script>
 </body>
 </html>
