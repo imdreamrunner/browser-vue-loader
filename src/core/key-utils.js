@@ -11,10 +11,18 @@
 
 import { checkResourceByUrl, fetchFromUrl } from './fetch-source'
 
+/**
+ * Find the actual URL from a given URL.
+ * For example, the given URL may be /path,
+ * the actual URL to the ES module may be /path.js or /path/index.js.
+ * @param {String} url
+ * @return {Promise<String>}
+ */
 export const resolveActualUrl = async url => {
   const pathSplits = url.split('/')
   const filename = pathSplits[pathSplits.length - 1]
-  if (url.indexOf('http') >= 0 && filename.indexOf('.') < 0 && url.indexOf('unpkg') < 0) {
+  if (url.indexOf('http') >= 0 && filename.indexOf('.') < 0 &&
+    url.indexOf('unpkg') < 0) {
     if (await checkResourceByUrl(url + '.js')) {
       url = url + '.js'
       return url
@@ -27,8 +35,17 @@ export const resolveActualUrl = async url => {
   return url
 }
 
+/**
+ * The list of package name that does not considered as NPM packages.
+ * @type {[string]}
+ */
 const npmBlacklist = ['empty', 'component-normalizer']
 
+/**
+ * Convert the NPM package name to actual URL at unpkg.com
+ * @param {String} name
+ * @return {Promise<String>}
+ */
 export const lookupNpmPackage = async name => {
   if (npmBlacklist.indexOf(name) >= 0) return null
   const unpkgUrl = `https://unpkg.com/${name}`
@@ -37,8 +54,18 @@ export const lookupNpmPackage = async name => {
   return null
 }
 
+/**
+ * The list of regular expression that defines URLs to be considered as
+ * binary data.
+ * @type {[RegExp]}
+ */
 const defaultBinary = [/\.(gif|png|jpe?g|svg)$/i]
 
+/**
+ * Check if a given URL shall be considered as binary resource.
+ * @param {String} url
+ * @return {boolean}
+ */
 export const checkDefaultBinary = url => {
   for (let tester of defaultBinary) {
     if (tester.test(url)) {
@@ -78,13 +105,21 @@ export const splitKey = key => {
       processor = processorOptions
     } else {
       processor = processorOptions.substring(0, questionMarkPosition)
-      options = JSON.parse(decodeURIComponent(processorOptions.substring(questionMarkPosition + 1)))
+      options = JSON.parse(decodeURIComponent(
+        processorOptions.substring(questionMarkPosition + 1)))
     }
   }
-  return { processor, url, options }
+  return {processor, url, options}
 }
 
-export const constructKey = ({ processor, options, url }) => {
+/**
+ * Construct a key with different components.
+ * @param {String} processor
+ * @param {Object} options
+ * @param {String} url
+ * @return {string} the constructed key
+ */
+export const constructKey = ({processor, options, url}) => {
   let result = ''
   if (processor) {
     result += processor
@@ -98,4 +133,8 @@ export const constructKey = ({ processor, options, url }) => {
   return result + url
 }
 
+/**
+ * Extract the file extension from a given URL
+ * @param {String} url
+ */
 export const extractExtension = url => url.split('.').pop().split(/#|\?/)[0]
